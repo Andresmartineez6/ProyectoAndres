@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../assets/imgs/Property 1=Default.png" width="180" alt="AlhambraCRM logo" />
+  <img src="./alhambraCrm/frontend/assets/imgs/Property 1=Default.png" width="180" alt="AlhambraCRM logo" />
 </p>
 
 # 📊 Alhambra CRM
