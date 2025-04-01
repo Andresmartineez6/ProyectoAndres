@@ -43,11 +43,6 @@ body{
         padding:15px 40px;
         align-items: center;
   
-        .logo{
-            font-weight: 700;
-            font-size: 24px;
-        }
-  
         .info-contacto{
             display: flex;
             gap: 30px;
@@ -92,7 +87,7 @@ body{
             margin: 0;
     
             li{
-            font-size:13px;
+            font-size:16px;
             cursor:pointer;
             transition: color 0.3s;
 
@@ -482,7 +477,7 @@ body{
                 gap:15px;
         
                 img{
-                    width:30px;
+                    width:60px;
                     margin-top:5px;
                 }
         
@@ -584,7 +579,7 @@ body{
             gap:15px;
     
                 img{
-                    width:30px;
+                    width:60px;
                     margin-top:5px;
                 }
         
@@ -670,8 +665,7 @@ body{
             gap:40px;
     
             img{
-                max-height:60px;
-                filter:brightness(1000%);
+                max-height:90px;
                 transition:transform 0.3s ease;
         
                 &:hover{
@@ -767,6 +761,88 @@ body{
         }
     }
 }
+
+
+#pie{
+    background-color:#fff;
+    padding:40px 0;
+    font-size:13px;
+    color:var(--color-texto);
+  
+    .contenedor-footer {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:20px;
+    
+        .logo-footer img {
+            height: 35px;
+        }
+    
+        .enlaces-footer {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-weight: 500;
+    
+            a{
+            text-decoration:none;
+            color:var(--color-texto);
+            transition: color 0.3s;
+    
+                &:hover{
+                    color:var(--color-primario);
+                }
+            }
+    
+            span{
+                color: var(--color-gris);
+            }
+
+        }
+  
+        hr {
+            width: 100%;
+            max-width: 1100px;
+            border: none;
+            border-top: 1px solid var(--color-secundario);
+            opacity: 0.2;
+        }
+  
+        .info-inferior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            flex-wrap: wrap;
+            gap: 15px;
+    
+                p{
+                    margin: 0;
+                }
+    
+            .redes-sociales{
+                display:flex;
+                gap:12px;
+        
+                a img{
+                    width:25px;
+                    height:25px;
+                    transition:transform 0.3s;
+                }
+        
+                a:hover img{
+                    transform:scale(1.2);
+                }
+            }
+        }
+    }
+}
+
+
+  
   
 
   
@@ -855,6 +931,12 @@ body{
 
     #seccion-clientes-formulario .bloque-contacto{
         flex-direction:column;
+    }
+
+
+    #pie .info-inferior{
+        flex-direction:column;
+        text-align:center;
     }
 
 }
