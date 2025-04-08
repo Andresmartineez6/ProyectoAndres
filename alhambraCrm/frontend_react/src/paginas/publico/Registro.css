@@ -1,0 +1,104 @@
+.pagina-registro {
+  padding: 60px 0;
+  background-color: #f8f9fa;
+}
+
+.contenedor-registro {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+}
+
+.cabecera-registro {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-registro {
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.cabecera-registro h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  margin-bottom: 10px;
+}
+
+.cabecera-registro p {
+  color: var(--color-gris);
+  margin-bottom: 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
+.form-control {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 0.25rem rgba(0, 247, 211, 0.25);
+}
+
+.form-check-label a {
+  color: var(--color-secundario);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.form-check-label a:hover {
+  color: var(--color-primario);
+}
+
+.boton-registro {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  transition: all 0.3s;
+}
+
+.boton-registro:hover {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: var(--color-secundario);
+}
+
+.pie-registro {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--color-gris);
+}
+
+.pie-registro a {
+  color: var(--color-secundario);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.pie-registro a:hover {
+  color: var(--color-primario);
+}
+
+@media (max-width: 768px) {
+  .contenedor-registro {
+    padding: 30px 20px;
+  }
+}

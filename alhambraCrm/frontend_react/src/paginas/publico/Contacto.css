@@ -1,0 +1,173 @@
+.pagina-contacto {
+  padding-bottom: 0;
+}
+
+.cabecera-pagina {
+  background: var(--color-gradiente);
+  color: white;
+  padding: 100px 0 60px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.cabecera-pagina h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.cabecera-pagina p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contenedor-contacto {
+  margin-bottom: 80px;
+}
+
+.info-contacto {
+  padding-right: 40px;
+}
+
+.info-contacto h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  margin-bottom: 20px;
+}
+
+.info-contacto > p {
+  color: var(--color-gris);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.datos-contacto {
+  margin-bottom: 30px;
+}
+
+.dato {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.dato .icono {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(0, 247, 211, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.dato .icono img {
+  width: 24px;
+  height: 24px;
+}
+
+.dato .icono i {
+  font-size: 24px;
+  color: var(--color-primario);
+}
+
+.dato .texto h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-texto);
+  margin-bottom: 5px;
+}
+
+.dato .texto p {
+  color: var(--color-gris);
+  margin: 0;
+}
+
+.horario h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-texto);
+  margin-bottom: 10px;
+}
+
+.horario p {
+  color: var(--color-gris);
+  margin-bottom: 5px;
+}
+
+.tarjeta-formulario {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+}
+
+.tarjeta-formulario h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.tarjeta-formulario .form-label {
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
+.tarjeta-formulario .form-control {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.tarjeta-formulario .form-control:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 0.25rem rgba(0, 247, 211, 0.25);
+}
+
+.tarjeta-formulario .boton-verde {
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: var(--color-secundario);
+}
+
+.tarjeta-formulario .boton-verde:hover {
+  background-color: #00e0c0;
+  border-color: #00e0c0;
+  color: var(--color-secundario);
+}
+
+.mapa-contacto {
+  width: 100%;
+  height: 450px;
+}
+
+@media (max-width: 991px) {
+  .info-contacto {
+    padding-right: 0;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cabecera-pagina {
+    padding: 80px 0 40px;
+  }
+  
+  .cabecera-pagina h1 {
+    font-size: 2rem;
+  }
+  
+  .tarjeta-formulario {
+    padding: 30px 20px;
+  }
+}

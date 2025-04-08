@@ -1,0 +1,16 @@
+.pagina-inicio {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding-top: 70px; /* Espacio para la cabecera fija */
+}
+
+/* Estilos para la transición entre secciones */
+section {
+  position: relative;
+  z-index: 1;
+}

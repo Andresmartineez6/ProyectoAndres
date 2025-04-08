@@ -1,0 +1,445 @@
+.informes-cliente {
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 70px);
+}
+
+.cabecera-informes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.cabecera-informes h1 {
+  color: var(--color-secundario);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.controles-informes {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.informe-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  color: var(--color-gris);
+  text-align: center;
+  padding: 20px;
+}
+
+.informe-contenido {
+  padding: 10px;
+}
+
+.tarjeta-estadistica {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  padding: 10px;
+  height: 100%;
+  transition: transform 0.3s;
+}
+
+.tarjeta-estadistica:hover {
+  transform: translateY(-5px);
+}
+
+.icono-estadistica {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.icono-estadistica i {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.icono-estadistica.completadas,
+.icono-estadistica.completados {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.icono-estadistica.pendientes {
+  background: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+}
+
+.icono-estadistica.en-progreso {
+  background: linear-gradient(135deg, #007bff 0%, #6610f2 100%);
+}
+
+.icono-estadistica.total {
+  background: linear-gradient(135deg, #6f42c1 0%, #007bff 100%);
+}
+
+.icono-estadistica.activos {
+  background: linear-gradient(135deg, #17a2b8 0%, #007bff 100%);
+}
+
+.icono-estadistica.presupuesto {
+  background: linear-gradient(135deg, #28a745 0%, #17a2b8 100%);
+}
+
+.icono-estadistica.promedio {
+  background: linear-gradient(135deg, #fd7e14 0%, #dc3545 100%);
+}
+
+.icono-estadistica.nuevos {
+  background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+}
+
+.tarjeta-estadistica h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--color-secundario);
+}
+
+.tarjeta-estadistica p {
+  color: var(--color-gris);
+  margin-bottom: 0;
+}
+
+/* Gráfico de barras */
+.grafico-barras {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.barra-item {
+  display: flex;
+  align-items: center;
+}
+
+.barra-etiqueta {
+  width: 120px;
+  font-size: 0.9rem;
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+.barra-contenedor {
+  flex: 1;
+  height: 25px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.barra {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+
+.barra-valor {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Gráfico circular */
+.grafico-circular {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.grafico-circular-contenedor {
+  width: 200px;
+  height: 200px;
+}
+
+.grafico-circular-placeholder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.segmento {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.segmento.alta {
+  background-color: #dc3545;
+}
+
+.segmento.media {
+  background-color: #fd7e14;
+}
+
+.segmento.baja {
+  background-color: #28a745;
+}
+
+.grafico-circular-centro {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-color: white;
+  border-radius: 50%;
+  top: 20%;
+  left: 20%;
+}
+
+.grafico-circular-leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leyenda-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.leyenda-color.alta {
+  background-color: #dc3545;
+}
+
+.leyenda-color.media {
+  background-color: #fd7e14;
+}
+
+.leyenda-color.baja {
+  background-color: #28a745;
+}
+
+.leyenda-texto {
+  display: flex;
+  flex-direction: column;
+}
+
+.leyenda-etiqueta {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-secundario);
+}
+
+.leyenda-valor {
+  font-size: 0.8rem;
+  color: var(--color-gris);
+}
+
+/* Gráfico de estado de proyectos */
+.grafico-estado-proyectos {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.estado-proyecto-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.estado-proyecto-icono {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.estado-proyecto-icono.completado {
+  background-color: #28a745;
+}
+
+.estado-proyecto-icono.en-progreso {
+  background-color: #007bff;
+}
+
+.estado-proyecto-icono.pendiente {
+  background-color: #fd7e14;
+}
+
+.estado-proyecto-info {
+  flex: 1;
+}
+
+.estado-proyecto-info h6 {
+  margin-bottom: 5px;
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+.estado-proyecto-barra {
+  height: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.estado-proyecto-valores {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--color-gris);
+}
+
+.estado-proyecto-valores .cantidad {
+  font-weight: 600;
+}
+
+/* Gráfico de dona */
+.grafico-dona {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.grafico-dona-contenedor {
+  width: 200px;
+  height: 200px;
+}
+
+.grafico-dona-placeholder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e9ecef;
+}
+
+.dona-segmento {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.dona-segmento.empresa1 {
+  background-color: var(--color-primario);
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
+  transform: rotate(0deg);
+}
+
+.dona-segmento.empresa2 {
+  background-color: var(--color-secundario);
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
+  transform: rotate(130deg);
+}
+
+.dona-segmento.empresa3 {
+  background-color: #fd7e14;
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
+  transform: rotate(210deg);
+}
+
+.dona-segmento.empresa4 {
+  background-color: #6f42c1;
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0 100%, 0 0);
+  transform: rotate(290deg);
+}
+
+.grafico-dona-centro {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  background-color: white;
+  border-radius: 50%;
+  top: 20%;
+  left: 20%;
+}
+
+.grafico-dona-leyenda {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+}
+
+.leyenda-color.empresa1 {
+  background-color: var(--color-primario);
+}
+
+.leyenda-color.empresa2 {
+  background-color: var(--color-secundario);
+}
+
+.leyenda-color.empresa3 {
+  background-color: #fd7e14;
+}
+
+.leyenda-color.empresa4 {
+  background-color: #6f42c1;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .grafico-circular,
+  .grafico-dona {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .grafico-circular-leyenda,
+  .grafico-dona-leyenda {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .cabecera-informes {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .controles-informes {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .barra-etiqueta {
+    width: 100px;
+  }
+  
+  .grafico-circular-leyenda,
+  .grafico-dona-leyenda {
+    flex-direction: column;
+  }
+}

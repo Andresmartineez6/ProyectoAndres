@@ -1,0 +1,349 @@
+/* Estilos para el Dashboard */
+.pagina-dashboard-admin {
+  padding-bottom: 3rem;
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.cabecera-dashboard {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  color: white;
+  padding: 2rem 0;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cabecera-dashboard h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.cabecera-dashboard p {
+  font-size: 1rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+/* Tarjetas de estadísticas */
+.tarjeta-estadistica {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+
+.tarjeta-estadistica:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-estadistica .card-body {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.icono-estadistica {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(52, 152, 219, 0.1);
+  margin-right: 1rem;
+  color: #3498db;
+}
+
+.icono-estadistica i {
+  font-size: 1.8rem;
+}
+
+.datos-estadistica {
+  flex: 1;
+}
+
+.valor-estadistica {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #2c3e50;
+}
+
+.titulo-estadistica {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.enlace-estadistica {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 1.5rem;
+}
+
+.enlace-estadistica a {
+  font-size: 0.85rem;
+  color: #3498db;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.enlace-estadistica a:hover {
+  color: #2980b9;
+}
+
+.enlace-estadistica a i {
+  margin-left: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.enlace-estadistica a:hover i {
+  transform: translateX(3px);
+}
+
+/* Tarjetas del dashboard */
+.tarjeta-tabla {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-tabla:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-tabla .card-header {
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.25rem;
+}
+
+.tarjeta-tabla .card-header h5 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.tarjeta-tabla .card-body {
+  padding: 1.25rem;
+}
+
+.tarjeta-tabla .card-footer {
+  background-color: white;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem 1.25rem;
+}
+
+/* Tablas */
+.tabla-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: #7f8c8d;
+  font-weight: 600;
+  padding: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.table tbody td {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Avatares */
+.avatar-mini {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.contacto-cliente {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.contacto-cliente div {
+  margin-bottom: 0.25rem;
+}
+
+.contacto-cliente div:last-child {
+  margin-bottom: 0;
+}
+
+/* Tarjetas de trabajadores */
+.lista-trabajadores {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tarjeta-trabajador {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.tarjeta-trabajador:hover {
+  background-color: #e9ecef;
+}
+
+.avatar-trabajador {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #3498db;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.info-trabajador {
+  flex: 1;
+}
+
+.info-trabajador h6 {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.info-trabajador .puesto {
+  color: #3498db;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.info-trabajador .contacto {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #7f8c8d;
+}
+
+.acciones-trabajador {
+  margin-left: 1rem;
+}
+
+/* Resumen de actividad */
+.actividad-resumen {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.actividad-item {
+  display: flex;
+  align-items: center;
+}
+
+.actividad-icono {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+.actividad-contenido h6 {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.actividad-valor {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .actividad-resumen {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cabecera-dashboard {
+    padding: 1.5rem 0;
+  }
+  
+  .cabecera-dashboard h1 {
+    font-size: 1.5rem;
+  }
+  
+  .valor-estadistica {
+    font-size: 1.5rem;
+  }
+  
+  .icono-estadistica {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .icono-estadistica i {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .cabecera-dashboard {
+    padding: 40px 0;
+  }
+  
+  .cabecera-dashboard h1 {
+    font-size: 1.8rem;
+  }
+  
+  .tabla-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}

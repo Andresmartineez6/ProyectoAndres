@@ -1,0 +1,271 @@
+.dashboard-cliente {
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 70px);
+}
+
+.bienvenida h1 {
+  color: var(--color-secundario);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.bienvenida p {
+  color: var(--color-gris);
+  font-size: 1rem;
+}
+
+.tarjeta-estadistica {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  padding: 10px;
+  height: 100%;
+  transition: transform 0.3s;
+}
+
+.tarjeta-estadistica:hover {
+  transform: translateY(-5px);
+}
+
+.icono-estadistica {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.icono-estadistica i {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.icono-estadistica.tareas-completadas {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.icono-estadistica.tareas-pendientes {
+  background: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+}
+
+.icono-estadistica.proyectos-activos {
+  background: linear-gradient(135deg, #6f42c1 0%, #007bff 100%);
+}
+
+.icono-estadistica.proximas-reuniones {
+  background: linear-gradient(135deg, #e83e8c 0%, #dc3545 100%);
+}
+
+.tarjeta-estadistica h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: var(--color-secundario);
+}
+
+.tarjeta-estadistica p {
+  color: var(--color-gris);
+  margin-bottom: 0;
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+}
+
+.estado {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.estado-completada {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.estado-progreso {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+}
+
+.estado-pendiente {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #fd7e14;
+}
+
+.prioridad {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.prioridad-alta {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.prioridad-media {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #fd7e14;
+}
+
+.prioridad-baja {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.lista-contactos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contacto-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s;
+}
+
+.contacto-item:hover {
+  transform: translateX(5px);
+  background-color: rgba(0, 247, 211, 0.05);
+}
+
+.avatar-contacto {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.info-contacto {
+  flex: 1;
+}
+
+.info-contacto h6 {
+  margin-bottom: 2px;
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+.info-contacto .empresa {
+  color: var(--color-gris);
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+}
+
+.contacto-detalles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--color-gris);
+}
+
+.contacto-detalles span {
+  display: flex;
+  align-items: center;
+}
+
+.contacto-detalles i {
+  margin-right: 5px;
+}
+
+.proximas-reuniones {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.reunion-item {
+  display: flex;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.fecha-reunion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: var(--color-secundario);
+  color: white;
+  border-radius: 8px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.fecha-reunion .dia {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.fecha-reunion .mes {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.detalles-reunion {
+  flex: 1;
+}
+
+.detalles-reunion h6 {
+  margin-bottom: 5px;
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+.detalles-reunion p {
+  margin-bottom: 3px;
+  font-size: 0.85rem;
+  color: var(--color-gris);
+  display: flex;
+  align-items: center;
+}
+
+.detalles-reunion p i {
+  margin-right: 5px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .tarjeta-estadistica {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bienvenida h1 {
+    font-size: 1.5rem;
+  }
+  
+  .tarjeta-estadistica h3 {
+    font-size: 1.5rem;
+  }
+  
+  .contacto-detalles {
+    flex-direction: column;
+    gap: 5px;
+  }
+}

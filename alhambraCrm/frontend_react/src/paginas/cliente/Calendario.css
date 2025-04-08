@@ -1,0 +1,272 @@
+.calendario-cliente {
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 70px);
+}
+
+.cabecera-calendario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.cabecera-calendario h1 {
+  color: var(--color-secundario);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.controles-calendario {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.controles-calendario h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+.calendario {
+  display: flex;
+  flex-direction: column;
+}
+
+.dias-semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-secundario);
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 10px;
+}
+
+.dias-calendario {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+  gap: 2px;
+}
+
+.dia-calendario {
+  border: 1px solid #e9ecef;
+  padding: 8px;
+  min-height: 120px;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+  transition: background-color 0.2s;
+}
+
+.dia-calendario:hover {
+  background-color: #f8f9fa;
+}
+
+.dia-calendario.otro-mes {
+  background-color: #f8f9fa;
+  color: #adb5bd;
+}
+
+.dia-calendario.hoy {
+  background-color: rgba(0, 247, 211, 0.1);
+}
+
+.dia-calendario.hoy .numero-dia {
+  background-color: var(--color-primario);
+  color: var(--color-secundario);
+  font-weight: bold;
+}
+
+.numero-dia {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.eventos-dia {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 5px;
+}
+
+.evento {
+  padding: 3px 5px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  color: white;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+}
+
+.hora-evento {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.titulo-evento {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mas-eventos {
+  font-size: 0.75rem;
+  color: var(--color-gris);
+  text-align: center;
+  margin-top: 2px;
+}
+
+.lista-eventos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.evento-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.evento-item:hover {
+  transform: translateX(5px);
+  background-color: rgba(0, 247, 211, 0.05);
+}
+
+.fecha-evento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  color: white;
+  border-radius: 8px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.dia-evento {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mes-evento {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.detalles-evento {
+  flex: 1;
+}
+
+.detalles-evento h6 {
+  margin-bottom: 5px;
+  color: var(--color-secundario);
+  font-weight: 600;
+}
+
+.detalles-evento p {
+  margin-bottom: 3px;
+  font-size: 0.85rem;
+  color: var(--color-gris);
+  display: flex;
+  align-items: center;
+}
+
+.detalles-evento p i {
+  margin-right: 5px;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .dias-calendario {
+    grid-auto-rows: minmax(100px, auto);
+  }
+  
+  .dia-calendario {
+    min-height: 100px;
+    padding: 5px;
+  }
+  
+  .evento {
+    padding: 2px 4px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .cabecera-calendario {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .controles-calendario {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .dias-calendario {
+    grid-auto-rows: minmax(80px, auto);
+  }
+  
+  .dia-calendario {
+    min-height: 80px;
+    padding: 3px;
+  }
+  
+  .numero-dia {
+    width: 20px;
+    height: 20px;
+    font-size: 0.8rem;
+  }
+  
+  .evento {
+    font-size: 0.65rem;
+  }
+  
+  .hora-evento {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .dias-semana {
+    font-size: 0.8rem;
+  }
+  
+  .dias-calendario {
+    grid-auto-rows: minmax(60px, auto);
+  }
+  
+  .dia-calendario {
+    min-height: 60px;
+  }
+  
+  .evento {
+    height: 18px;
+    padding: 1px 3px;
+    font-size: 0.6rem;
+  }
+}

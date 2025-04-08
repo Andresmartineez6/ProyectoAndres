@@ -1,0 +1,137 @@
+.pagina-trabajadores-admin {
+  padding-bottom: 60px;
+}
+
+.cabecera-seccion {
+  background: linear-gradient(90deg, var(--color-primario) 0%, var(--color-secundario) 100%);
+  color: white;
+  padding: 60px 0;
+  margin-bottom: 40px;
+}
+
+.cabecera-seccion h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.cabecera-seccion p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.tarjeta-filtros, .tarjeta-tabla {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.tarjeta-filtros .card-body {
+  padding: 20px;
+}
+
+.btn-principal {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: var(--color-secundario);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.btn-principal:hover {
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table thead th {
+  border-top: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--color-gris);
+  font-weight: 600;
+  padding: 15px 20px;
+  font-size: 0.9rem;
+}
+
+.table tbody td {
+  padding: 15px 20px;
+  vertical-align: middle;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.badge.departamento {
+  background-color: rgba(0, 247, 211, 0.2);
+  color: var(--color-secundario);
+}
+
+.switch-estado {
+  margin-bottom: 0;
+}
+
+.form-switch .form-check-input:checked {
+  background-color: #28c76f;
+  border-color: #28c76f;
+}
+
+.form-switch .form-check-input:not(:checked) {
+  background-color: #ea5455;
+  border-color: #ea5455;
+}
+
+.form-switch .form-check-input {
+  width: 3em;
+  margin-left: -3.5em;
+}
+
+.form-check-label {
+  margin-left: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.btn-accion {
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.btn-accion:hover {
+  transform: scale(1.2);
+}
+
+@media (max-width: 767px) {
+  .cabecera-seccion {
+    padding: 40px 0;
+  }
+  
+  .cabecera-seccion h1 {
+    font-size: 1.8rem;
+  }
+  
+  .tabla-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-y: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}

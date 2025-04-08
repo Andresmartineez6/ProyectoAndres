@@ -1,0 +1,78 @@
+.pagina-caracteristicas {
+  padding-bottom: 60px;
+}
+
+.cabecera-pagina {
+  background: var(--color-gradiente);
+  color: white;
+  padding: 100px 0 60px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.cabecera-pagina h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.cabecera-pagina p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tarjeta-caracteristica {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.tarjeta-caracteristica:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.icono-caracteristica {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  background-color: rgba(0, 247, 211, 0.1);
+  border-radius: 12px;
+}
+
+.icono-caracteristica img {
+  height: 45px;
+  width: 45px;
+}
+
+.tarjeta-caracteristica h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  margin-bottom: 15px;
+}
+
+.tarjeta-caracteristica p {
+  font-size: 0.95rem;
+  color: var(--color-gris);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .cabecera-pagina {
+    padding: 80px 0 40px;
+  }
+  
+  .cabecera-pagina h1 {
+    font-size: 2rem;
+  }
+}

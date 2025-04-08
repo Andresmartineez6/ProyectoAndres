@@ -1,0 +1,119 @@
+.pagina-login {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  padding: 60px 0;
+  background-color: #f8f9fa;
+}
+
+.contenedor-login {
+  max-width: 450px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 40px;
+}
+
+.cabecera-login {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-login {
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.cabecera-login h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  margin-bottom: 10px;
+}
+
+.cabecera-login p {
+  color: var(--color-gris);
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--color-texto);
+}
+
+.form-control {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 0.25rem rgba(0, 247, 211, 0.25);
+}
+
+.opciones-login {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.enlace-recuperar {
+  color: var(--color-secundario);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+}
+
+.enlace-recuperar:hover {
+  color: var(--color-primario);
+}
+
+.boton-login {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  transition: all 0.3s;
+}
+
+.boton-login:hover {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: var(--color-secundario);
+}
+
+.pie-login {
+  text-align: center;
+  margin-top: 30px;
+  color: var(--color-gris);
+}
+
+.pie-login a {
+  color: var(--color-secundario);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.pie-login a:hover {
+  color: var(--color-primario);
+}
+
+@media (max-width: 576px) {
+  .contenedor-login {
+    padding: 30px 20px;
+  }
+  
+  .opciones-login {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

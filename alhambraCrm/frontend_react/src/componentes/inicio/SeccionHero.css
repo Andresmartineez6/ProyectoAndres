@@ -1,0 +1,173 @@
+#seccion-hero {
+  padding: 80px 40px;
+  background: white;
+}
+
+.contenedor {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.contenido-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.texto-hero {
+  max-width: 600px;
+}
+
+.texto-hero h1 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.texto-hero .negrita {
+  font-weight: 700;
+}
+
+.texto-hero p {
+  margin: 20px 0;
+  color: var(--color-gris);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.botones-hero {
+  display: flex;
+  gap: 20px;
+}
+
+.botones-hero a {
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.boton-verde {
+  background-color: var(--color-primario);
+  color: #000;
+}
+
+.boton-verde:hover {
+  filter: brightness(1.1);
+}
+
+.boton-bordeado {
+  border: 2px solid var(--color-secundario);
+  color: var(--color-secundario);
+}
+
+.boton-bordeado:hover {
+  background-color: var(--color-secundario);
+  color: white;
+}
+
+.imagen-hero {
+  max-width: 400px;
+}
+
+.imagen-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.decoracion-1, .decoracion-2 {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 247, 211, 0.2);
+  z-index: 1;
+}
+
+.decoracion-1 {
+  width: 200px;
+  height: 200px;
+  top: -50px;
+  right: 0;
+}
+
+.decoracion-2 {
+  width: 150px;
+  height: 150px;
+  bottom: -30px;
+  left: 30px;
+}
+
+.forma-onda {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  line-height: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #seccion-hero {
+    padding: 60px 20px;
+  }
+
+  .contenido-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .imagen-hero {
+    order: -1;
+    margin: 0 auto;
+  }
+
+  .botones-hero {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 991px) {
+  #seccion-hero {
+    padding: 100px 0 80px;
+    text-align: center;
+  }
+  
+  .titulo-hero {
+    font-size: 2.5rem;
+  }
+  
+  .estadisticas-hero {
+    justify-content: center;
+  }
+  
+  .imagen-hero {
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 767px) {
+  .titulo-hero {
+    font-size: 2rem;
+  }
+  
+  .subtitulo-hero {
+    font-size: 1rem;
+  }
+  
+  .botones-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .botones-hero .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}

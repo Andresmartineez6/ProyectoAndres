@@ -1,0 +1,205 @@
+.pagina-precios {
+  padding-bottom: 60px;
+}
+
+.cabecera-pagina {
+  background: var(--color-gradiente);
+  color: white;
+  padding: 100px 0 60px;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.cabecera-pagina h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.cabecera-pagina p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contenedor-planes {
+  margin-bottom: 80px;
+}
+
+.tarjeta-plan {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tarjeta-plan:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.plan-destacado {
+  border: 2px solid var(--color-primario);
+  transform: scale(1.05);
+  position: relative;
+  z-index: 2;
+}
+
+.plan-destacado:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+.cabecera-plan {
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cabecera-plan h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  margin-bottom: 15px;
+}
+
+.precio {
+  margin-bottom: 15px;
+}
+
+.precio .cantidad {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-texto);
+}
+
+.precio .periodo {
+  font-size: 1rem;
+  color: var(--color-gris);
+}
+
+.descripcion-plan {
+  color: var(--color-gris);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+.caracteristicas-plan {
+  padding: 30px;
+  flex: 1;
+}
+
+.caracteristicas-plan ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.caracteristicas-plan li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--color-texto);
+  position: relative;
+  padding-left: 25px;
+}
+
+.caracteristicas-plan li:last-child {
+  border-bottom: none;
+}
+
+.caracteristicas-plan li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-primario);
+  font-weight: bold;
+}
+
+.pie-plan {
+  padding: 30px;
+  text-align: center;
+}
+
+.pie-plan .boton-verde,
+.pie-plan .boton-bordeado {
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.seccion-contacto-precios {
+  background-color: var(--color-secundario);
+  border-radius: 15px;
+  padding: 50px;
+  color: white;
+}
+
+.contenido-contacto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.texto-contacto h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.texto-contacto p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+.boton-oscuro {
+  background-color: var(--color-primario);
+  color: var(--color-secundario);
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.boton-oscuro:hover {
+  background-color: white;
+  color: var(--color-secundario);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 991px) {
+  .plan-destacado {
+    transform: none;
+  }
+  
+  .plan-destacado:hover {
+    transform: translateY(-10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .cabecera-pagina {
+    padding: 80px 0 40px;
+  }
+  
+  .cabecera-pagina h1 {
+    font-size: 2rem;
+  }
+  
+  .seccion-contacto-precios {
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .contenido-contacto {
+    justify-content: center;
+  }
+}
