@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./alhambraCrm/frontend_react/public/assets/logo-alhambra-blanco.svg" width="300" alt="AlhambraCRM logo" />
+  <img src="./logo-alhambra.svg" width="400" alt="AlhambraCRM logo" />
 </p>
 
 <h1 align="center">AlhambraCRM</h1>
