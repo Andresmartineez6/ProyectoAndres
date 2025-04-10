@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="./alhambraCrm/frontend_react/public/assets/imgs/alhambra logo blanco.png" width="400" alt="AlhambraCRM logo" />
-</p>
-
-<h1 align="center">AlhambraCRM</h1>
+<h1 align="center" style="font-size: 3rem; color: #3498db; margin-top: 2rem; margin-bottom: 1rem;">AlhambraCRM</h1>
 
 <p align="center">
   <b>Sistema de gestión de relaciones con clientes moderno, potente y visual para empresas españolas</b>
