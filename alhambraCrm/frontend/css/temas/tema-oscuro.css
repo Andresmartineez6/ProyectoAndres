@@ -1,0 +1,322 @@
+/**
+ * AlhambraCRM - Tema Oscuro
+ * Estilos para el panel de control (áreas privadas)
+ */
+
+:root {
+  /* Paleta de colores - Tema Oscuro */
+  --color-fondo-principal: #121212;
+  --color-fondo-secundario: #1e1e1e;
+  --color-fondo-terciario: #2d2d2d;
+  --color-fondo-elevacion: #383838;
+  --color-borde: #444444;
+  
+  /* Colores de texto */
+  --color-texto-principal: #ffffff;
+  --color-texto-secundario: #b3b3b3;
+  --color-texto-terciario: #808080;
+  
+  /* Colores de acento - Mantenemos los colores originales de la marca */
+  --color-primario: #00f7d3;
+  --color-secundario: #05044c;
+  --color-acento: #00f7d3;
+  --color-acento-hover: #00d6b6;
+  
+  /* Colores de estado */
+  --color-exito: #4caf50;
+  --color-advertencia: #ff9800;
+  --color-error: #f44336;
+  --color-info: #2196f3;
+  
+  /* Sombras */
+  --sombra-suave: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --sombra-media: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --sombra-fuerte: 0 8px 30px rgba(0, 0, 0, 0.5);
+  
+  /* Bordes redondeados */
+  --borde-radio-pequeno: 4px;
+  --borde-radio-medio: 8px;
+  --borde-radio-grande: 16px;
+  
+  /* Transiciones */
+  --transicion-rapida: all 0.2s ease;
+  --transicion-media: all 0.3s ease;
+  --transicion-lenta: all 0.5s ease;
+}
+
+/* Estilos base para el tema oscuro */
+body.tema-oscuro {
+  background-color: var(--color-fondo-principal);
+  color: var(--color-texto-principal);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: var(--transicion-media);
+}
+
+/* Contenedores */
+.tema-oscuro .contenedor {
+  background-color: var(--color-fondo-secundario);
+  border-radius: var(--borde-radio-medio);
+  box-shadow: var(--sombra-suave);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: var(--transicion-media);
+}
+
+.tema-oscuro .contenedor:hover {
+  box-shadow: var(--sombra-media);
+  transform: translateY(-2px);
+}
+
+.tema-oscuro .contenedor-cabecera {
+  background-color: var(--color-fondo-terciario);
+  border-bottom: 1px solid var(--color-borde);
+  padding: 15px 20px;
+}
+
+.tema-oscuro .contenedor-cuerpo {
+  padding: 20px;
+}
+
+/* Tarjetas */
+.tema-oscuro .tarjeta {
+  background-color: var(--color-fondo-terciario);
+  border-radius: var(--borde-radio-medio);
+  box-shadow: var(--sombra-suave);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: var(--transicion-media);
+}
+
+.tema-oscuro .tarjeta:hover {
+  box-shadow: var(--sombra-media);
+  transform: translateY(-3px);
+}
+
+.tema-oscuro .tarjeta-cabecera {
+  background-color: var(--color-fondo-elevacion);
+  border-bottom: 1px solid var(--color-borde);
+  padding: 15px 20px;
+}
+
+.tema-oscuro .tarjeta-cuerpo {
+  padding: 20px;
+}
+
+/* Botones */
+.tema-oscuro .boton {
+  background-color: var(--color-fondo-terciario);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--borde-radio-pequeno);
+  color: var(--color-texto-principal);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+  transition: var(--transicion-rapida);
+}
+
+.tema-oscuro .boton:hover {
+  background-color: var(--color-fondo-elevacion);
+}
+
+.tema-oscuro .boton-primario {
+  background-color: var(--color-primario);
+  border: none;
+  color: var(--color-secundario);
+}
+
+.tema-oscuro .boton-primario:hover {
+  background-color: var(--color-acento-hover);
+}
+
+.tema-oscuro .boton-secundario {
+  background-color: var(--color-secundario);
+  border: none;
+  color: var(--color-texto-principal);
+}
+
+.tema-oscuro .boton-secundario:hover {
+  background-color: #0a0982;
+}
+
+/* Formularios */
+.tema-oscuro input,
+.tema-oscuro select,
+.tema-oscuro textarea {
+  background-color: var(--color-fondo-principal);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--borde-radio-pequeno);
+  color: var(--color-texto-principal);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 10px 12px;
+  transition: var(--transicion-rapida);
+  width: 100%;
+}
+
+.tema-oscuro input:focus,
+.tema-oscuro select:focus,
+.tema-oscuro textarea:focus {
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 2px rgba(0, 247, 211, 0.2);
+  outline: none;
+}
+
+/* Tablas */
+.tema-oscuro table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tema-oscuro th {
+  background-color: var(--color-fondo-terciario);
+  border-bottom: 2px solid var(--color-borde);
+  color: var(--color-texto-principal);
+  font-weight: 600;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.tema-oscuro td {
+  border-bottom: 1px solid var(--color-borde);
+  color: var(--color-texto-secundario);
+  padding: 10px 15px;
+}
+
+.tema-oscuro tr:hover {
+  background-color: var(--color-fondo-terciario);
+}
+
+/* Barra lateral */
+.tema-oscuro .barra-lateral {
+  background-color: var(--color-fondo-secundario);
+  border-right: 1px solid var(--color-borde);
+  height: 100vh;
+  position: fixed;
+  transition: var(--transicion-media);
+  width: 250px;
+}
+
+.tema-oscuro .barra-lateral-cabecera {
+  align-items: center;
+  border-bottom: 1px solid var(--color-borde);
+  display: flex;
+  height: 70px;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.tema-oscuro .barra-lateral-menu {
+  list-style: none;
+  margin: 0;
+  padding: 20px 0;
+}
+
+.tema-oscuro .barra-lateral-item {
+  margin-bottom: 5px;
+}
+
+.tema-oscuro .barra-lateral-enlace {
+  align-items: center;
+  color: var(--color-texto-secundario);
+  display: flex;
+  padding: 12px 20px;
+  text-decoration: none;
+  transition: var(--transicion-rapida);
+}
+
+.tema-oscuro .barra-lateral-enlace:hover,
+.tema-oscuro .barra-lateral-enlace.activo {
+  background-color: var(--color-fondo-terciario);
+  color: var(--color-primario);
+}
+
+.tema-oscuro .barra-lateral-icono {
+  margin-right: 12px;
+}
+
+/* Cabecera del panel */
+.tema-oscuro .panel-cabecera {
+  align-items: center;
+  background-color: var(--color-fondo-secundario);
+  border-bottom: 1px solid var(--color-borde);
+  display: flex;
+  height: 70px;
+  justify-content: space-between;
+  left: 250px;
+  padding: 0 30px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: var(--transicion-media);
+  z-index: 100;
+}
+
+/* Contenido principal */
+.tema-oscuro .contenido-principal {
+  margin-left: 250px;
+  margin-top: 70px;
+  padding: 30px;
+  transition: var(--transicion-media);
+}
+
+/* Efectos y animaciones */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tema-oscuro .animacion-aparecer {
+  animation: aparecer 0.3s ease forwards;
+}
+
+/* Transiciones suaves para cambios de estado */
+.tema-oscuro .transicion-suave {
+  transition: var(--transicion-media);
+}
+
+/* Estilos para gráficos */
+.tema-oscuro .grafico {
+  background-color: var(--color-fondo-terciario);
+  border-radius: var(--borde-radio-medio);
+  padding: 20px;
+}
+
+/* Estilos para badges y etiquetas */
+.tema-oscuro .etiqueta {
+  background-color: var(--color-fondo-elevacion);
+  border-radius: 20px;
+  color: var(--color-texto-secundario);
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+}
+
+.tema-oscuro .etiqueta-primaria {
+  background-color: rgba(0, 247, 211, 0.2);
+  color: var(--color-primario);
+}
+
+.tema-oscuro .etiqueta-exito {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--color-exito);
+}
+
+.tema-oscuro .etiqueta-advertencia {
+  background-color: rgba(255, 152, 0, 0.2);
+  color: var(--color-advertencia);
+}
+
+.tema-oscuro .etiqueta-error {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: var(--color-error);
+}

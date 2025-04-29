@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Tareas - AlhambraCRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link rel="stylesheet" href="../../../css/temas/tema-oscuro.css">
+  <style>
+    /* Estilos específicos para la página de tareas */
+    .filtros-tareas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .filtro {
+      background-color: var(--color-fondo-terciario);
+      border: 1px solid var(--color-borde);
+      border-radius: var(--borde-radio-pequeno);
+      color: var(--color-texto-secundario);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 8px 15px;
+      transition: var(--transicion-rapida);
+    }
+    
+    .filtro:hover, .filtro.activo {
+      background-color: var(--color-primario);
+      border-color: var(--color-primario);
+      color: var(--color-secundario);
+    }
+    
+    .tabla-tareas {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .tabla-tareas th {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    
+    .tabla-tareas td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    
+    .tabla-tareas tr:hover {
+      background-color: var(--color-fondo-terciario);
+    }
+    
+    .estado-tarea {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .estado-pendiente {
+      background-color: rgba(255, 152, 0, 0.2);
+      color: var(--color-advertencia);
+    }
+    
+    .estado-en-progreso {
+      background-color: rgba(33, 150, 243, 0.2);
+      color: var(--color-info);
+    }
+    
+    .estado-completada {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: var(--color-exito);
+    }
+    
+    .estado-cancelada {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: var(--color-error);
+    }
+    
+    .prioridad-tarea {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    
+    .prioridad-baja {
+      background-color: var(--color-exito);
+    }
+    
+    .prioridad-media {
+      background-color: var(--color-advertencia);
+    }
+    
+    .prioridad-alta {
+      background-color: var(--color-error);
+    }
+    
+    .prioridad-urgente {
+      background-color: #ff0000;
+      box-shadow: 0 0 5px #ff0000;
+    }
+    
+    .acciones-tarea {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .accion-tarea {
+      background-color: var(--color-fondo-terciario);
+      border: none;
+      border-radius: 4px;
+      color: var(--color-texto-secundario);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px 10px;
+      transition: all 0.2s ease;
+    }
+    
+    .accion-tarea:hover {
+      background-color: var(--color-fondo-elevacion);
+      color: var(--color-texto-principal);
+    }
+    
+    .accion-editar:hover {
+      color: var(--color-primario);
+    }
+    
+    .accion-eliminar:hover {
+      color: var(--color-error);
+    }
+    
+    .accion-completar:hover {
+      color: var(--color-exito);
+    }
+    
+    /* Modal para crear/editar tareas */
+    .modal {
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      height: 100%;
+      left: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    
+    .modal-contenido {
+      background-color: var(--color-fondo-secundario);
+      border-radius: var(--borde-radio-medio);
+      box-shadow: var(--sombra-fuerte);
+      margin: 10% auto;
+      max-width: 600px;
+      position: relative;
+      width: 90%;
+    }
+    
+    .modal-cabecera {
+      align-items: center;
+      border-bottom: 1px solid var(--color-borde);
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 20px;
+    }
+    
+    .modal-cabecera h2 {
+      color: var(--color-texto-principal);
+      font-size: 20px;
+      margin: 0;
+    }
+    
+    .cerrar-modal {
+      background: none;
+      border: none;
+      color: var(--color-texto-secundario);
+      cursor: pointer;
+      font-size: 24px;
+      transition: var(--transicion-rapida);
+    }
+    
+    .cerrar-modal:hover {
+      color: var(--color-error);
+    }
+    
+    .modal-cuerpo {
+      padding: 20px;
+    }
+    
+    .formulario-tarea {
+      display: grid;
+      gap: 15px;
+    }
+    
+    .grupo-formulario {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .grupo-formulario label {
+      color: var(--color-texto-secundario);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .grupo-formulario input,
+    .grupo-formulario select,
+    .grupo-formulario textarea {
+      background-color: var(--color-fondo-principal);
+      border: 1px solid var(--color-borde);
+      border-radius: var(--borde-radio-pequeno);
+      color: var(--color-texto-principal);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      padding: 10px 12px;
+      transition: var(--transicion-rapida);
+    }
+    
+    .grupo-formulario input:focus,
+    .grupo-formulario select:focus,
+    .grupo-formulario textarea:focus {
+      border-color: var(--color-primario);
+      box-shadow: 0 0 0 2px rgba(0, 247, 211, 0.2);
+      outline: none;
+    }
+    
+    .grupo-formulario textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .fila-formulario {
+      display: grid;
+      gap: 15px;
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: 768px) {
+      .fila-formulario {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .modal-pie {
+      border-top: 1px solid var(--color-borde);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 15px 20px;
+    }
+    
+    /* Animaciones */
+    .animacion-entrada {
+      animation: entradaSuave 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes entradaSuave {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+  </style>
+</head>
+<body class="tema-oscuro">
+  <!-- Barra lateral -->
+  <aside class="barra-lateral">
+    <div class="barra-lateral-cabecera">
+      <img src="../../../assets/imgs/logo-alhambra-blanco.svg" alt="AlhambraCRM" height="40">
+    </div>
+    
+    <ul class="barra-lateral-menu">
+      <li class="barra-lateral-item">
+        <a href="dashboard.html" class="barra-lateral-enlace">
+          <i class="fas fa-tachometer-alt barra-lateral-icono"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="proyectos.html" class="barra-lateral-enlace">
+          <i class="fas fa-project-diagram barra-lateral-icono"></i>
+          Proyectos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="tareas.html" class="barra-lateral-enlace activo">
+          <i class="fas fa-tasks barra-lateral-icono"></i>
+          Tareas
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="calendario.html" class="barra-lateral-enlace">
+          <i class="fas fa-calendar-alt barra-lateral-icono"></i>
+          Calendario
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="contactos.html" class="barra-lateral-enlace">
+          <i class="fas fa-address-book barra-lateral-icono"></i>
+          Contactos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="informes.html" class="barra-lateral-enlace">
+          <i class="fas fa-chart-bar barra-lateral-icono"></i>
+          Informes
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="area-privada.html" class="barra-lateral-enlace">
+          <i class="fas fa-user-shield barra-lateral-icono"></i>
+          Área Privada
+        </a>
+      </li>
+    </ul>
+  </aside>
+  
+  <!-- Cabecera del panel -->
+  <header class="panel-cabecera">
+    <div class="busqueda">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar tareas..." id="buscarTareas">
+    </div>
+    
+    <div class="acciones-usuario">
+      <div class="notificaciones">
+        <i class="fas fa-bell"></i>
+        <span class="contador">3</span>
+      </div>
+      
+      <div class="usuario">
+        <img src="../../../assets/imgs/avatar-usuario.jpg" alt="Avatar" class="avatar-usuario">
+        <span class="nombre-usuario">Juan Pérez</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Contenido principal -->
+  <main class="contenido-principal">
+    <div class="cabecera-seccion">
+      <h1 class="animacion-entrada">Gestión de Tareas</h1>
+      <button class="boton-primario animacion-entrada" id="btnNuevaTarea">
+        <i class="fas fa-plus"></i> Nueva Tarea
+      </button>
+    </div>
+    
+    <p class="animacion-entrada delay-1">Administra y organiza todas tus tareas de manera eficiente.</p>
+    
+    <!-- Filtros de tareas -->
+    <div class="filtros-tareas animacion-entrada delay-1">
+      <button class="filtro activo" data-filtro="todas">Todas</button>
+      <button class="filtro" data-filtro="pendiente">Pendientes</button>
+      <button class="filtro" data-filtro="en_progreso">En Progreso</button>
+      <button class="filtro" data-filtro="completada">Completadas</button>
+      <button class="filtro" data-filtro="alta">Alta Prioridad</button>
+    </div>
+    
+    <!-- Contenedor de tareas -->
+    <div class="contenedor animacion-entrada delay-2">
+      <div class="contenedor-cabecera">
+        <h3>Mis Tareas</h3>
+        <div class="opciones-vista">
+          <button class="boton-pequeno activo" id="vistaTareas" title="Vista de tabla">
+            <i class="fas fa-list"></i>
+          </button>
+          <button class="boton-pequeno" id="vistaKanban" title="Vista Kanban">
+            <i class="fas fa-columns"></i>
+          </button>
+        </div>
+      </div>
+      <div class="contenedor-cuerpo">
+        <table class="tabla-tareas">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Proyecto</th>
+              <th>Fecha Límite</th>
+              <th>Estado</th>
+              <th>Prioridad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="listaTareas">
+            <!-- Las tareas se cargarán dinámicamente desde el backend -->
+            <tr>
+              <td>Diseñar nueva interfaz de usuario</td>
+              <td>Rediseño Web Corporativa</td>
+              <td>05/05/2025</td>
+              <td><span class="estado-tarea estado-en-progreso">En Progreso</span></td>
+              <td><span class="prioridad-tarea prioridad-alta"></span> Alta</td>
+              <td>
+                <div class="acciones-tarea">
+                  <button class="accion-tarea accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-tarea accion-completar" title="Marcar como completada"><i class="fas fa-check"></i></button>
+                  <button class="accion-tarea accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Implementar funcionalidad de login</td>
+              <td>Desarrollo App Móvil</td>
+              <td>10/05/2025</td>
+              <td><span class="estado-tarea estado-pendiente">Pendiente</span></td>
+              <td><span class="prioridad-tarea prioridad-media"></span> Media</td>
+              <td>
+                <div class="acciones-tarea">
+                  <button class="accion-tarea accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-tarea accion-completar" title="Marcar como completada"><i class="fas fa-check"></i></button>
+                  <button class="accion-tarea accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Optimizar rendimiento de la base de datos</td>
+              <td>Implementación CRM</td>
+              <td>15/05/2025</td>
+              <td><span class="estado-tarea estado-completada">Completada</span></td>
+              <td><span class="prioridad-tarea prioridad-alta"></span> Alta</td>
+              <td>
+                <div class="acciones-tarea">
+                  <button class="accion-tarea accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-tarea accion-completar" title="Marcar como pendiente"><i class="fas fa-undo"></i></button>
+                  <button class="accion-tarea accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Crear documentación técnica</td>
+              <td>Desarrollo App Móvil</td>
+              <td>20/05/2025</td>
+              <td><span class="estado-tarea estado-pendiente">Pendiente</span></td>
+              <td><span class="prioridad-tarea prioridad-baja"></span> Baja</td>
+              <td>
+                <div class="acciones-tarea">
+                  <button class="accion-tarea accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-tarea accion-completar" title="Marcar como completada"><i class="fas fa-check"></i></button>
+                  <button class="accion-tarea accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Reunión con cliente para revisión</td>
+              <td>Rediseño Web Corporativa</td>
+              <td>08/05/2025</td>
+              <td><span class="estado-tarea estado-pendiente">Pendiente</span></td>
+              <td><span class="prioridad-tarea prioridad-urgente"></span> Urgente</td>
+              <td>
+                <div class="acciones-tarea">
+                  <button class="accion-tarea accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-tarea accion-completar" title="Marcar como completada"><i class="fas fa-check"></i></button>
+                  <button class="accion-tarea accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Resumen de tareas -->
+    <div class="dashboard-estadisticas animacion-entrada delay-3">
+      <div class="tarjeta-estadistica">
+        <div class="icono">
+          <i class="fas fa-tasks"></i>
+        </div>
+        <div class="titulo">Total Tareas</div>
+        <div class="valor">24</div>
+      </div>
+      
+      <div class="tarjeta-estadistica">
+        <div class="icono">
+          <i class="fas fa-hourglass-half"></i>
+        </div>
+        <div class="titulo">Pendientes</div>
+        <div class="valor">12</div>
+      </div>
+      
+      <div class="tarjeta-estadistica">
+        <div class="icono">
+          <i class="fas fa-spinner"></i>
+        </div>
+        <div class="titulo">En Progreso</div>
+        <div class="valor">8</div>
+      </div>
+      
+      <div class="tarjeta-estadistica">
+        <div class="icono">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="titulo">Completadas</div>
+        <div class="valor">4</div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Modal para crear/editar tareas -->
+  <div class="modal" id="modalTarea">
+    <div class="modal-contenido">
+      <div class="modal-cabecera">
+        <h2 id="tituloModal">Nueva Tarea</h2>
+        <button class="cerrar-modal" id="cerrarModal">&times;</button>
+      </div>
+      <div class="modal-cuerpo">
+        <form id="formularioTarea" class="formulario-tarea">
+          <input type="hidden" id="idTarea" value="">
+          
+          <div class="grupo-formulario">
+            <label for="tituloTarea">Título</label>
+            <input type="text" id="tituloTarea" name="titulo" required>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="descripcionTarea">Descripción</label>
+            <textarea id="descripcionTarea" name="descripcion"></textarea>
+          </div>
+          
+          <div class="fila-formulario">
+            <div class="grupo-formulario">
+              <label for="proyectoTarea">Proyecto</label>
+              <select id="proyectoTarea" name="id_proyecto">
+                <option value="">Seleccionar proyecto</option>
+                <option value="1">Rediseño Web Corporativa</option>
+                <option value="2">Desarrollo App Móvil</option>
+                <option value="3">Implementación CRM</option>
+              </select>
+            </div>
+            
+            <div class="grupo-formulario">
+              <label for="asignadoTarea">Asignado a</label>
+              <select id="asignadoTarea" name="asignado_a">
+                <option value="">Sin asignar</option>
+                <option value="1">Pedro Gómez</option>
+                <option value="2">Lucía Fernández</option>
+                <option value="3">Miguel Torres</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="fila-formulario">
+            <div class="grupo-formulario">
+              <label for="fechaInicioTarea">Fecha de inicio</label>
+              <input type="date" id="fechaInicioTarea" name="fecha_inicio">
+            </div>
+            
+            <div class="grupo-formulario">
+              <label for="fechaFinTarea">Fecha límite</label>
+              <input type="date" id="fechaFinTarea" name="fecha_fin">
+            </div>
+          </div>
+          
+          <div class="fila-formulario">
+            <div class="grupo-formulario">
+              <label for="estadoTarea">Estado</label>
+              <select id="estadoTarea" name="estado">
+                <option value="pendiente">Pendiente</option>
+                <option value="en_progreso">En Progreso</option>
+                <option value="completada">Completada</option>
+                <option value="cancelada">Cancelada</option>
+              </select>
+            </div>
+            
+            <div class="grupo-formulario">
+              <label for="prioridadTarea">Prioridad</label>
+              <select id="prioridadTarea" name="prioridad">
+                <option value="baja">Baja</option>
+                <option value="media">Media</option>
+                <option value="alta">Alta</option>
+                <option value="urgente">Urgente</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-pie">
+        <button class="boton" id="cancelarTarea">Cancelar</button>
+        <button class="boton-primario" id="guardarTarea">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../../js/autenticacion.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Proteger la página para que solo sea accesible por clientes
+      const autenticacion = new Autenticacion();
+      autenticacion.protegerPagina(['cliente']);
+      
+      // Referencias a elementos del DOM
+      const btnNuevaTarea = document.getElementById('btnNuevaTarea');
+      const modalTarea = document.getElementById('modalTarea');
+      const cerrarModal = document.getElementById('cerrarModal');
+      const cancelarTarea = document.getElementById('cancelarTarea');
+      const guardarTarea = document.getElementById('guardarTarea');
+      const formularioTarea = document.getElementById('formularioTarea');
+      const tituloModal = document.getElementById('tituloModal');
+      const filtros = document.querySelectorAll('.filtro');
+      const buscarTareas = document.getElementById('buscarTareas');
+      
+      // Abrir modal para nueva tarea
+      btnNuevaTarea.addEventListener('click', function() {
+        tituloModal.textContent = 'Nueva Tarea';
+        formularioTarea.reset();
+        document.getElementById('idTarea').value = '';
+        modalTarea.style.display = 'block';
+      });
+      
+      // Cerrar modal
+      cerrarModal.addEventListener('click', function() {
+        modalTarea.style.display = 'none';
+      });
+      
+      cancelarTarea.addEventListener('click', function() {
+        modalTarea.style.display = 'none';
+      });
+      
+      // Cerrar modal al hacer clic fuera del contenido
+      window.addEventListener('click', function(event) {
+        if (event.target === modalTarea) {
+          modalTarea.style.display = 'none';
+        }
+      });
+      
+      // Guardar tarea
+      guardarTarea.addEventListener('click', function() {
+        // Aquí iría la lógica para guardar la tarea en el backend
+        // usando la API que hemos creado
+        
+        // Simulación de guardado
+        alert('Tarea guardada correctamente');
+        modalTarea.style.display = 'none';
+      });
+      
+      // Filtrar tareas
+      filtros.forEach(function(filtro) {
+        filtro.addEventListener('click', function() {
+          // Quitar clase activo de todos los filtros
+          filtros.forEach(f => f.classList.remove('activo'));
+          
+          // Añadir clase activo al filtro seleccionado
+          this.classList.add('activo');
+          
+          // Obtener el valor del filtro
+          const valorFiltro = this.dataset.filtro;
+          
+          // Aquí iría la lógica para filtrar las tareas según el valor del filtro
+          console.log('Filtrar por:', valorFiltro);
+        });
+      });
+      
+      // Buscar tareas
+      buscarTareas.addEventListener('input', function() {
+        const terminoBusqueda = this.value.trim().toLowerCase();
+        
+        // Aquí iría la lógica para buscar tareas según el término de búsqueda
+        console.log('Buscar:', terminoBusqueda);
+      });
+      
+      // Editar tarea (delegación de eventos)
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.accion-editar')) {
+          const fila = e.target.closest('tr');
+          const titulo = fila.cells[0].textContent;
+          
+          // Aquí iría la lógica para obtener los datos de la tarea y cargarlos en el formulario
+          tituloModal.textContent = 'Editar Tarea';
+          document.getElementById('tituloTarea').value = titulo;
+          modalTarea.style.display = 'block';
+        }
+      });
+      
+      // Cargar tareas desde el backend
+      function cargarTareas() {
+        // Aquí iría la lógica para cargar las tareas desde el backend
+        // usando la API que hemos creado
+        
+        // Ejemplo de cómo se podría implementar:
+        /*
+        fetch('/alhambraCrm/backend/api/tareas/obtener.php')
+          .then(response => response.json())
+          .then(data => {
+            if (data.registros) {
+              // Limpiar la tabla
+              const listaTareas = document.getElementById('listaTareas');
+              listaTareas.innerHTML = '';
+              
+              // Añadir las tareas a la tabla
+              data.registros.forEach(tarea => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                  <td>${tarea.titulo}</td>
+                  <td>${tarea.nombre_proyecto || '-'}</td>
+                  <td>${tarea.fecha_fin || '-'}</td>
+                  <td><span class="estado-tarea estado-${tarea.estado}">${tarea.estado}</span></td>
+                  <td><span class="prioridad-tarea prioridad-${tarea.prioridad}"></span> ${tarea.prioridad}</td>
+                  <td>
+                    <div class="acciones-tarea">
+                      <button class="accion-tarea accion-editar" title="Editar" data-id="${tarea.id}"><i class="fas fa-edit"></i></button>
+                      <button class="accion-tarea accion-completar" title="Marcar como completada" data-id="${tarea.id}"><i class="fas fa-check"></i></button>
+                      <button class="accion-tarea accion-eliminar" title="Eliminar" data-id="${tarea.id}"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                `;
+                listaTareas.appendChild(fila);
+              });
+            }
+          })
+          .catch(error => console.error('Error al cargar las tareas:', error));
+        */
+      }
+      
+      // Cargar tareas al iniciar la página
+      // cargarTareas();
+    });
+  </script>
+</body>
+</html>

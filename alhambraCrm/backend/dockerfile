@@ -1,0 +1,22 @@
+FROM php:8.0-apache
+
+# Instalar extensiones PHP necesarias para MySQL
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Habilitar mod_rewrite para URLs amigables
+RUN a2enmod rewrite
+
+# Configurar el directorio de trabajo
+WORKDIR /var/www/html
+
+# Copiar archivos de la aplicación
+COPY . /var/www/html/
+
+# Configurar permisos
+RUN chown -R www-data:www-data /var/www/html
+
+# Exponer puerto 80
+EXPOSE 80
+
+# Iniciar Apache en primer plano
+CMD ["apache2-foreground"]

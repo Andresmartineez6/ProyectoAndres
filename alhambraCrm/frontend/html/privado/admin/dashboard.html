@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Administrador - AlhambraCRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link rel="stylesheet" href="../../../css/temas/tema-oscuro.css">
+  <style>
+    /* Estilos específicos para el dashboard de administrador */
+    .dashboard-resumen {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .tarjeta-resumen {
+      background: linear-gradient(145deg, var(--color-fondo-terciario), var(--color-fondo-elevacion));
+      border-radius: var(--borde-radio-medio);
+      box-shadow: var(--sombra-suave);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .tarjeta-resumen:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-media);
+    }
+    
+    .tarjeta-resumen .icono {
+      background-color: rgba(0, 247, 211, 0.1);
+      border-radius: 50%;
+      color: var(--color-primario);
+      font-size: 24px;
+      height: 50px;
+      line-height: 50px;
+      margin-bottom: 15px;
+      text-align: center;
+      width: 50px;
+    }
+    
+    .tarjeta-resumen .titulo {
+      color: var(--color-texto-secundario);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .tarjeta-resumen .valor {
+      color: var(--color-texto-principal);
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .tarjeta-resumen .tendencia {
+      align-items: center;
+      color: var(--color-texto-terciario);
+      display: flex;
+      font-size: 12px;
+    }
+    
+    .tarjeta-resumen .tendencia.positiva {
+      color: var(--color-exito);
+    }
+    
+    .tarjeta-resumen .tendencia.negativa {
+      color: var(--color-error);
+    }
+    
+    .dashboard-contenido {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .dashboard-contenido {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .tabla-usuarios {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .tabla-usuarios th {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    
+    .tabla-usuarios td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    
+    .tabla-usuarios tr:hover {
+      background-color: var(--color-fondo-terciario);
+    }
+    
+    .estado {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .estado-activo {
+      background-color: rgba(76, 175, 80, 0.2);
+      color: var(--color-exito);
+    }
+    
+    .estado-inactivo {
+      background-color: rgba(244, 67, 54, 0.2);
+      color: var(--color-error);
+    }
+    
+    .estado-pendiente {
+      background-color: rgba(255, 152, 0, 0.2);
+      color: var(--color-advertencia);
+    }
+    
+    .acciones {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .accion {
+      background-color: var(--color-fondo-terciario);
+      border: none;
+      border-radius: 4px;
+      color: var(--color-texto-secundario);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px 10px;
+      transition: all 0.2s ease;
+    }
+    
+    .accion:hover {
+      background-color: var(--color-fondo-elevacion);
+      color: var(--color-texto-principal);
+    }
+    
+    .accion-editar:hover {
+      color: var(--color-primario);
+    }
+    
+    .accion-eliminar:hover {
+      color: var(--color-error);
+    }
+    
+    /* Animaciones */
+    .animacion-entrada {
+      animation: entradaSuave 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes entradaSuave {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body class="tema-oscuro">
+  <!-- Barra lateral -->
+  <aside class="barra-lateral">
+    <div class="barra-lateral-cabecera">
+      <img src="../../../assets/imgs/logo-alhambra-blanco.svg" alt="AlhambraCRM" height="40">
+    </div>
+    
+    <ul class="barra-lateral-menu">
+      <li class="barra-lateral-item">
+        <a href="dashboard.html" class="barra-lateral-enlace activo">
+          <i class="fas fa-tachometer-alt barra-lateral-icono"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="clientes.html" class="barra-lateral-enlace">
+          <i class="fas fa-users barra-lateral-icono"></i>
+          Clientes
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="trabajadores.html" class="barra-lateral-enlace">
+          <i class="fas fa-user-tie barra-lateral-icono"></i>
+          Trabajadores
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="proyectos.html" class="barra-lateral-enlace">
+          <i class="fas fa-project-diagram barra-lateral-icono"></i>
+          Proyectos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="informes.html" class="barra-lateral-enlace">
+          <i class="fas fa-chart-bar barra-lateral-icono"></i>
+          Informes
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="configuracion.html" class="barra-lateral-enlace">
+          <i class="fas fa-cog barra-lateral-icono"></i>
+          Configuración
+        </a>
+      </li>
+    </ul>
+  </aside>
+  
+  <!-- Cabecera del panel -->
+  <header class="panel-cabecera">
+    <div class="busqueda">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar...">
+    </div>
+    
+    <div class="acciones-usuario">
+      <div class="notificaciones">
+        <i class="fas fa-bell"></i>
+        <span class="contador">5</span>
+      </div>
+      
+      <div class="usuario">
+        <img src="../../../assets/imgs/avatar-admin.jpg" alt="Avatar" class="avatar-usuario">
+        <span class="nombre-usuario">Administrador</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Contenido principal -->
+  <main class="contenido-principal">
+    <h1 class="animacion-entrada">Dashboard de Administración</h1>
+    <p class="animacion-entrada delay-1">Bienvenido, Administrador. Aquí tienes un resumen general del sistema.</p>
+    
+    <!-- Resumen general -->
+    <section class="dashboard-resumen">
+      <div class="tarjeta-resumen animacion-entrada delay-1">
+        <div class="icono">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="titulo">Total Clientes</div>
+        <div class="valor">128</div>
+        <div class="tendencia positiva">
+          <i class="fas fa-arrow-up"></i> 15% desde el mes pasado
+        </div>
+      </div>
+      
+      <div class="tarjeta-resumen animacion-entrada delay-2">
+        <div class="icono">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="titulo">Total Trabajadores</div>
+        <div class="valor">42</div>
+        <div class="tendencia positiva">
+          <i class="fas fa-arrow-up"></i> 8% desde el mes pasado
+        </div>
+      </div>
+      
+      <div class="tarjeta-resumen animacion-entrada delay-3">
+        <div class="icono">
+          <i class="fas fa-project-diagram"></i>
+        </div>
+        <div class="titulo">Proyectos Activos</div>
+        <div class="valor">35</div>
+        <div class="tendencia positiva">
+          <i class="fas fa-arrow-up"></i> 12% desde el mes pasado
+        </div>
+      </div>
+      
+      <div class="tarjeta-resumen animacion-entrada delay-4">
+        <div class="icono">
+          <i class="fas fa-money-bill-wave"></i>
+        </div>
+        <div class="titulo">Ingresos Mensuales</div>
+        <div class="valor">€45,250</div>
+        <div class="tendencia positiva">
+          <i class="fas fa-arrow-up"></i> 18% desde el mes pasado
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contenido principal del dashboard -->
+    <div class="dashboard-contenido">
+      <!-- Columna izquierda -->
+      <div class="columna-principal">
+        <!-- Tabla de clientes recientes -->
+        <div class="contenedor animacion-entrada delay-2">
+          <div class="contenedor-cabecera">
+            <h3>Clientes Recientes</h3>
+            <a href="clientes.html" class="boton-pequeno">Ver todos</a>
+          </div>
+          <div class="contenedor-cuerpo">
+            <table class="tabla-usuarios">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Email</th>
+                  <th>Empresa</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>María García</td>
+                  <td>maria@ejemplo.com</td>
+                  <td>Tecnología Avanzada S.L.</td>
+                  <td><span class="estado estado-activo">Activo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Carlos Rodríguez</td>
+                  <td>carlos@ejemplo.com</td>
+                  <td>Innovación Digital</td>
+                  <td><span class="estado estado-activo">Activo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Laura Martínez</td>
+                  <td>laura@ejemplo.com</td>
+                  <td>Consultora Estratégica</td>
+                  <td><span class="estado estado-inactivo">Inactivo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Javier López</td>
+                  <td>javier@ejemplo.com</td>
+                  <td>Soluciones Empresariales</td>
+                  <td><span class="estado estado-pendiente">Pendiente</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ana Sánchez</td>
+                  <td>ana@ejemplo.com</td>
+                  <td>Marketing Digital</td>
+                  <td><span class="estado estado-activo">Activo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+        <!-- Tabla de trabajadores recientes -->
+        <div class="contenedor animacion-entrada delay-3">
+          <div class="contenedor-cabecera">
+            <h3>Trabajadores Recientes</h3>
+            <a href="trabajadores.html" class="boton-pequeno">Ver todos</a>
+          </div>
+          <div class="contenedor-cuerpo">
+            <table class="tabla-usuarios">
+              <thead>
+                <tr>
+                  <th>Trabajador</th>
+                  <th>Email</th>
+                  <th>Departamento</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pedro Gómez</td>
+                  <td>pedro@alhambracrm.com</td>
+                  <td>Desarrollo</td>
+                  <td><span class="estado estado-activo">Activo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Lucía Fernández</td>
+                  <td>lucia@alhambracrm.com</td>
+                  <td>Diseño</td>
+                  <td><span class="estado estado-activo">Activo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Miguel Torres</td>
+                  <td>miguel@alhambracrm.com</td>
+                  <td>Marketing</td>
+                  <td><span class="estado estado-inactivo">Inactivo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Sara Navarro</td>
+                  <td>sara@alhambracrm.com</td>
+                  <td>Ventas</td>
+                  <td><span class="estado estado-activo">Activo</span></td>
+                  <td>
+                    <div class="acciones">
+                      <button class="accion accion-editar"><i class="fas fa-edit"></i></button>
+                      <button class="accion accion-eliminar"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Columna derecha -->
+      <div class="columna-secundaria">
+        <!-- Gráfico de rendimiento -->
+        <div class="contenedor animacion-entrada delay-2">
+          <div class="contenedor-cabecera">
+            <h3>Rendimiento del Sistema</h3>
+          </div>
+          <div class="contenedor-cuerpo">
+            <div class="grafico" id="graficoRendimiento"></div>
+          </div>
+        </div>
+        
+        <!-- Actividad reciente -->
+        <div class="contenedor animacion-entrada delay-3">
+          <div class="contenedor-cabecera">
+            <h3>Actividad Reciente</h3>
+          </div>
+          <div class="contenedor-cuerpo">
+            <ul class="lista-actividad">
+              <li class="actividad-item">
+                <i class="fas fa-user-plus"></i>
+                <div class="actividad-contenido">
+                  <p class="actividad-texto">Nuevo cliente registrado</p>
+                  <p class="actividad-tiempo">Hace 5 minutos</p>
+                </div>
+              </li>
+              <li class="actividad-item">
+                <i class="fas fa-project-diagram"></i>
+                <div class="actividad-contenido">
+                  <p class="actividad-texto">Proyecto actualizado: Desarrollo Web</p>
+                  <p class="actividad-tiempo">Hace 2 horas</p>
+                </div>
+              </li>
+              <li class="actividad-item">
+                <i class="fas fa-file-invoice"></i>
+                <div class="actividad-contenido">
+                  <p class="actividad-texto">Nueva factura creada: #INV-2025-042</p>
+                  <p class="actividad-tiempo">Hace 3 horas</p>
+                </div>
+              </li>
+              <li class="actividad-item">
+                <i class="fas fa-user-edit"></i>
+                <div class="actividad-contenido">
+                  <p class="actividad-texto">Perfil de trabajador actualizado</p>
+                  <p class="actividad-tiempo">Hace 5 horas</p>
+                </div>
+              </li>
+              <li class="actividad-item">
+                <i class="fas fa-tasks"></i>
+                <div class="actividad-contenido">
+                  <p class="actividad-texto">5 tareas completadas</p>
+                  <p class="actividad-tiempo">Hace 1 día</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../../../js/autenticacion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Proteger la página para que solo sea accesible por administradores
+      const autenticacion = new Autenticacion();
+      autenticacion.protegerPagina(['admin']);
+      
+      // Inicializar gráfico de rendimiento
+      const ctx = document.getElementById('graficoRendimiento').getContext('2d');
+      
+      const graficoRendimiento = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Clientes', 'Proyectos', 'Tareas', 'Facturas'],
+          datasets: [{
+            data: [128, 35, 245, 87],
+            backgroundColor: [
+              '#00f7d3',
+              '#05044c',
+              '#3498db',
+              '#9b59b6'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: 'rgba(255, 255, 255, 0.7)',
+                padding: 20,
+                font: {
+                  size: 12,
+                  family: "'Poppins', sans-serif"
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+      
+      // Manejar el menú desplegable del usuario
+      const usuario = document.querySelector('.usuario');
+      usuario.addEventListener('click', function() {
+        // Aquí se implementaría la lógica para mostrar/ocultar el menú desplegable
+      });
+    });
+  </script>
+</body>
+</html>

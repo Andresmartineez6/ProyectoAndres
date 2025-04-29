@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - AlhambraCRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/estilos.css">
+  <style>
+    /* Estilos específicos para la página de login */
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .contenedor-login {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      max-width: 900px;
+      overflow: hidden;
+      width: 90%;
+    }
+    
+    .imagen-login {
+      background: linear-gradient(135deg, #00f7d3, #05044c);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      width: 45%;
+    }
+    
+    .imagen-login img {
+      max-width: 100%;
+    }
+    
+    .imagen-login h2 {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    
+    .imagen-login p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    
+    .formulario-login {
+      padding: 40px;
+      width: 55%;
+    }
+    
+    .formulario-login h1 {
+      color: #333;
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+    
+    .grupo-formulario {
+      margin-bottom: 20px;
+    }
+    
+    .grupo-formulario label {
+      color: #555;
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .grupo-formulario input {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      padding: 12px 15px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .grupo-formulario input:focus {
+      border-color: #00f7d3;
+      box-shadow: 0 0 0 2px rgba(0, 247, 211, 0.2);
+      outline: none;
+    }
+    
+    .mensaje-error {
+      color: #f44336;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .boton-login {
+      background-color: #00f7d3;
+      border: none;
+      border-radius: 4px;
+      color: #05044c;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 10px;
+      padding: 12px 20px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .boton-login:hover {
+      background-color: #00d6b6;
+      transform: translateY(-2px);
+    }
+    
+    .enlaces-adicionales {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    
+    .enlaces-adicionales a {
+      color: #05044c;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .enlaces-adicionales a:hover {
+      color: #00f7d3;
+    }
+    
+    /* Animaciones */
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animacion-aparecer {
+      animation: aparecer 0.5s ease forwards;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .contenedor-login {
+        flex-direction: column;
+      }
+      
+      .imagen-login, .formulario-login {
+        width: 100%;
+      }
+      
+      .imagen-login {
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor-login">
+    <div class="imagen-login">
+      <img src="../assets/imgs/logo-alhambra-blanco.svg" alt="AlhambraCRM Logo">
+      <h2>Bienvenido a AlhambraCRM</h2>
+      <p>La herramienta perfecta para automatizar procesos, potenciar ventas y fortalecer relaciones con tus clientes.</p>
+    </div>
+    
+    <div class="formulario-login animacion-aparecer">
+      <h1>Iniciar Sesión</h1>
+      
+      <form id="formularioLogin">
+        <div class="grupo-formulario">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+          <div class="mensaje-error" id="errorEmail">Por favor, introduce un correo electrónico válido</div>
+        </div>
+        
+        <div class="grupo-formulario">
+          <label for="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" name="contrasena" required>
+          <div class="mensaje-error" id="errorContrasena">La contraseña es obligatoria</div>
+        </div>
+        
+        <div class="mensaje-error" id="errorGeneral"></div>
+        
+        <button type="submit" class="boton-login">Iniciar Sesión</button>
+        
+        <div class="enlaces-adicionales">
+          <a href="recuperar-contrasena.html">¿Olvidaste tu contraseña?</a>
+          <a href="registro.html">Crear una cuenta</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/autenticacion.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const formulario = document.getElementById('formularioLogin');
+      const errorEmail = document.getElementById('errorEmail');
+      const errorContrasena = document.getElementById('errorContrasena');
+      const errorGeneral = document.getElementById('errorGeneral');
+      
+      formulario.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Limpiar mensajes de error
+        errorEmail.style.display = 'none';
+        errorContrasena.style.display = 'none';
+        errorGeneral.style.display = 'none';
+        
+        // Obtener valores
+        const email = document.getElementById('email').value.trim();
+        const contrasena = document.getElementById('contrasena').value;
+        
+        // Validación básica
+        let esValido = true;
+        
+        if (!email || !email.includes('@')) {
+          errorEmail.style.display = 'block';
+          esValido = false;
+        }
+        
+        if (!contrasena) {
+          errorContrasena.style.display = 'block';
+          esValido = false;
+        }
+        
+        if (esValido) {
+          try {
+            // Intentar iniciar sesión
+            const resultado = await autenticacion.iniciarSesion(email, contrasena);
+            
+            if (!resultado.exito) {
+              errorGeneral.textContent = resultado.mensaje || 'Error al iniciar sesión. Verifica tus credenciales.';
+              errorGeneral.style.display = 'block';
+            }
+            // Si es exitoso, la redirección la maneja el método iniciarSesion
+          } catch (error) {
+            console.error('Error:', error);
+            errorGeneral.textContent = 'Error de conexión. Intenta de nuevo más tarde.';
+            errorGeneral.style.display = 'block';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

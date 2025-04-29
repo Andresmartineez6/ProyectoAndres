@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  # Servicio para el frontend (HTML, CSS y JavaScript)
+  frontend:
+    image: nginx:alpine
+    container_name: alhambra_frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - backend
+    networks:
+      - alhambra_red
+
+  # Servicio para el backend PHP
+  backend:
+    build: ./backend
+    container_name: alhambra_backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - alhambra_red
+
+  # servicio para la base de datos MySQL
+  db:
+    image: mysql:8.0
+    container_name: alhambra_db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: alhambracrm
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: contraseña
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - alhambra_red
+
+  # servicio phpMyAdmin para administrar la base de datos 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: alhambra_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - db
+    networks:
+      - alhambra_red
+
+networks:
+  alhambra_red:
+    driver: bridge
+
+volumes:
+  db_data:

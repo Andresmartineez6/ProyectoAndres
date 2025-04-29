@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Cliente - AlhambraCRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link rel="stylesheet" href="../../../css/temas/tema-oscuro.css">
+  <style>
+    /* Estilos adicionales específicos para el dashboard */
+    .dashboard-estadisticas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .tarjeta-estadistica {
+      background: linear-gradient(145deg, var(--color-fondo-terciario), var(--color-fondo-elevacion));
+      border-radius: var(--borde-radio-medio);
+      box-shadow: var(--sombra-suave);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .tarjeta-estadistica:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sombra-media);
+    }
+    
+    .tarjeta-estadistica .icono {
+      background-color: rgba(0, 247, 211, 0.1);
+      border-radius: 50%;
+      color: var(--color-primario);
+      font-size: 24px;
+      height: 50px;
+      line-height: 50px;
+      margin-bottom: 15px;
+      text-align: center;
+      width: 50px;
+    }
+    
+    .tarjeta-estadistica .titulo {
+      color: var(--color-texto-secundario);
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .tarjeta-estadistica .valor {
+      color: var(--color-texto-principal);
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .tarjeta-estadistica .tendencia {
+      align-items: center;
+      color: var(--color-texto-terciario);
+      display: flex;
+      font-size: 12px;
+    }
+    
+    .tarjeta-estadistica .tendencia.positiva {
+      color: var(--color-exito);
+    }
+    
+    .tarjeta-estadistica .tendencia.negativa {
+      color: var(--color-error);
+    }
+    
+    .tarjeta-estadistica .tendencia i {
+      margin-right: 5px;
+    }
+    
+    .dashboard-contenido {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .dashboard-contenido {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .grafico-actividad {
+      height: 300px;
+      margin-bottom: 20px;
+      position: relative;
+      width: 100%;
+    }
+    
+    .lista-proyectos {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .proyecto-item {
+      border-bottom: 1px solid var(--color-borde);
+      padding: 15px 0;
+    }
+    
+    .proyecto-item:last-child {
+      border-bottom: none;
+    }
+    
+    .proyecto-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    
+    .proyecto-nombre {
+      color: var(--color-texto-principal);
+      font-weight: 500;
+    }
+    
+    .proyecto-fecha {
+      color: var(--color-texto-terciario);
+      font-size: 12px;
+    }
+    
+    .proyecto-progreso {
+      background-color: var(--color-fondo-principal);
+      border-radius: 10px;
+      height: 6px;
+      margin-top: 5px;
+      overflow: hidden;
+      width: 100%;
+    }
+    
+    .proyecto-progreso-barra {
+      background-color: var(--color-primario);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+    
+    .calendario-eventos {
+      margin-top: 20px;
+    }
+    
+    .evento {
+      background-color: var(--color-fondo-terciario);
+      border-left: 3px solid var(--color-primario);
+      border-radius: var(--borde-radio-pequeno);
+      margin-bottom: 10px;
+      padding: 12px 15px;
+      transition: transform 0.2s ease;
+    }
+    
+    .evento:hover {
+      transform: translateX(5px);
+    }
+    
+    .evento-titulo {
+      color: var(--color-texto-principal);
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .evento-hora {
+      color: var(--color-texto-terciario);
+      font-size: 12px;
+    }
+    
+    /* Animaciones */
+    .animacion-entrada {
+      animation: entradaSuave 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes entradaSuave {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body class="tema-oscuro">
+  <!-- Barra lateral -->
+  <aside class="barra-lateral">
+    <div class="barra-lateral-cabecera">
+      <img src="../../../assets/imgs/logo-alhambra-blanco.svg" alt="AlhambraCRM" height="40">
+    </div>
+    
+    <ul class="barra-lateral-menu">
+      <li class="barra-lateral-item">
+        <a href="dashboard.html" class="barra-lateral-enlace activo">
+          <i class="fas fa-tachometer-alt barra-lateral-icono"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="proyectos.html" class="barra-lateral-enlace">
+          <i class="fas fa-project-diagram barra-lateral-icono"></i>
+          Proyectos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="tareas.html" class="barra-lateral-enlace">
+          <i class="fas fa-tasks barra-lateral-icono"></i>
+          Tareas
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="calendario.html" class="barra-lateral-enlace">
+          <i class="fas fa-calendar-alt barra-lateral-icono"></i>
+          Calendario
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="contactos.html" class="barra-lateral-enlace">
+          <i class="fas fa-address-book barra-lateral-icono"></i>
+          Contactos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="informes.html" class="barra-lateral-enlace">
+          <i class="fas fa-chart-bar barra-lateral-icono"></i>
+          Informes
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="area-privada.html" class="barra-lateral-enlace">
+          <i class="fas fa-user-shield barra-lateral-icono"></i>
+          Área Privada
+        </a>
+      </li>
+    </ul>
+  </aside>
+  
+  <!-- Cabecera del panel -->
+  <header class="panel-cabecera">
+    <div class="busqueda">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar...">
+    </div>
+    
+    <div class="acciones-usuario">
+      <div class="notificaciones">
+        <i class="fas fa-bell"></i>
+        <span class="contador">3</span>
+      </div>
+      
+      <div class="usuario">
+        <img src="../../../assets/imgs/avatar-usuario.jpg" alt="Avatar" class="avatar-usuario">
+        <span class="nombre-usuario">Juan Pérez</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Contenido principal -->
+  <main class="contenido-principal">
+    <h1 class="animacion-entrada">Dashboard</h1>
+    <p class="animacion-entrada delay-1">Bienvenido de nuevo, Juan. Aquí tienes un resumen de tu actividad.</p>
+    
+    <!-- Estadísticas -->
+    <section class="dashboard-estadisticas">
+      <div class="tarjeta-estadistica animacion-entrada delay-1">
+        <div class="icono">
+          <i class="fas fa-project-diagram"></i>
+        </div>
+        <div class="titulo">Proyectos Activos</div>
+        <div class="valor">8</div>
+        <div class="tendencia positiva">
+          <i class="fas fa-arrow-up"></i> 12% desde el mes pasado
+        </div>
+      </div>
+      
+      <div class="tarjeta-estadistica animacion-entrada delay-2">
+        <div class="icono">
+          <i class="fas fa-tasks"></i>
+        </div>
+        <div class="titulo">Tareas Pendientes</div>
+        <div class="valor">24</div>
+        <div class="tendencia negativa">
+          <i class="fas fa-arrow-up"></i> 5% desde el mes pasado
+        </div>
+      </div>
+      
+      <div class="tarjeta-estadistica animacion-entrada delay-3">
+        <div class="icono">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="titulo">Eventos Próximos</div>
+        <div class="valor">5</div>
+        <div class="tendencia">
+          <i class="fas fa-minus"></i> Sin cambios
+        </div>
+      </div>
+      
+      <div class="tarjeta-estadistica animacion-entrada delay-4">
+        <div class="icono">
+          <i class="fas fa-file-invoice"></i>
+        </div>
+        <div class="titulo">Facturas Pendientes</div>
+        <div class="valor">3</div>
+        <div class="tendencia positiva">
+          <i class="fas fa-arrow-down"></i> 20% desde el mes pasado
+        </div>
+      </div>
+    </section>
+    
+    <!-- Contenido principal del dashboard -->
+    <div class="dashboard-contenido">
+      <!-- Columna izquierda -->
+      <div class="columna-principal">
+        <!-- Gráfico de actividad -->
+        <div class="contenedor animacion-entrada delay-2">
+          <div class="contenedor-cabecera">
+            <h3>Actividad Reciente</h3>
+          </div>
+          <div class="contenedor-cuerpo">
+            <div class="grafico-actividad" id="graficoActividad"></div>
+          </div>
+        </div>
+        
+        <!-- Proyectos en progreso -->
+        <div class="contenedor animacion-entrada delay-3">
+          <div class="contenedor-cabecera">
+            <h3>Proyectos en Progreso</h3>
+          </div>
+          <div class="contenedor-cuerpo">
+            <ul class="lista-proyectos">
+              <li class="proyecto-item">
+                <div class="proyecto-info">
+                  <span class="proyecto-nombre">Rediseño Web Corporativa</span>
+                  <span class="proyecto-fecha">Vence: 15/05/2025</span>
+                </div>
+                <div class="proyecto-progreso">
+                  <div class="proyecto-progreso-barra" style="width: 75%"></div>
+                </div>
+              </li>
+              <li class="proyecto-item">
+                <div class="proyecto-info">
+                  <span class="proyecto-nombre">Campaña Marketing Digital</span>
+                  <span class="proyecto-fecha">Vence: 30/05/2025</span>
+                </div>
+                <div class="proyecto-progreso">
+                  <div class="proyecto-progreso-barra" style="width: 45%"></div>
+                </div>
+              </li>
+              <li class="proyecto-item">
+                <div class="proyecto-info">
+                  <span class="proyecto-nombre">Desarrollo App Móvil</span>
+                  <span class="proyecto-fecha">Vence: 22/06/2025</span>
+                </div>
+                <div class="proyecto-progreso">
+                  <div class="proyecto-progreso-barra" style="width: 30%"></div>
+                </div>
+              </li>
+              <li class="proyecto-item">
+                <div class="proyecto-info">
+                  <span class="proyecto-nombre">Implementación CRM</span>
+                  <span class="proyecto-fecha">Vence: 10/07/2025</span>
+                </div>
+                <div class="proyecto-progreso">
+                  <div class="proyecto-progreso-barra" style="width: 15%"></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Columna derecha -->
+      <div class="columna-secundaria">
+        <!-- Próximos eventos -->
+        <div class="contenedor animacion-entrada delay-2">
+          <div class="contenedor-cabecera">
+            <h3>Próximos Eventos</h3>
+          </div>
+          <div class="contenedor-cuerpo">
+            <div class="calendario-eventos">
+              <div class="evento">
+                <div class="evento-titulo">Reunión con equipo de diseño</div>
+                <div class="evento-hora">Hoy, 14:00 - 15:30</div>
+              </div>
+              <div class="evento">
+                <div class="evento-titulo">Revisión de proyecto web</div>
+                <div class="evento-hora">Mañana, 10:00 - 11:30</div>
+              </div>
+              <div class="evento">
+                <div class="evento-titulo">Llamada con cliente</div>
+                <div class="evento-hora">30/04/2025, 16:00 - 16:30</div>
+              </div>
+              <div class="evento">
+                <div class="evento-titulo">Presentación de propuesta</div>
+                <div class="evento-hora">02/05/2025, 11:00 - 12:30</div>
+              </div>
+              <div class="evento">
+                <div class="evento-titulo">Entrega de proyecto</div>
+                <div class="evento-hora">15/05/2025, 09:00 - 10:00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tareas pendientes -->
+        <div class="contenedor animacion-entrada delay-3">
+          <div class="contenedor-cabecera">
+            <h3>Tareas Pendientes</h3>
+          </div>
+          <div class="contenedor-cuerpo">
+            <ul class="lista-tareas">
+              <li class="tarea-item">
+                <input type="checkbox" id="tarea1">
+                <label for="tarea1">Revisar propuesta de diseño</label>
+              </li>
+              <li class="tarea-item">
+                <input type="checkbox" id="tarea2">
+                <label for="tarea2">Enviar factura al cliente</label>
+              </li>
+              <li class="tarea-item">
+                <input type="checkbox" id="tarea3">
+                <label for="tarea3">Actualizar contenido de la web</label>
+              </li>
+              <li class="tarea-item">
+                <input type="checkbox" id="tarea4">
+                <label for="tarea4">Preparar presentación para reunión</label>
+              </li>
+              <li class="tarea-item">
+                <input type="checkbox" id="tarea5">
+                <label for="tarea5">Contactar con nuevo proveedor</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="../../../js/autenticacion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Proteger la página para que solo sea accesible por clientes
+      const autenticacion = new Autenticacion();
+      autenticacion.protegerPagina(['cliente']);
+      
+      // Inicializar gráfico de actividad
+      const ctx = document.getElementById('graficoActividad').getContext('2d');
+      const gradiente = ctx.createLinearGradient(0, 0, 0, 300);
+      gradiente.addColorStop(0, 'rgba(0, 247, 211, 0.5)');
+      gradiente.addColorStop(1, 'rgba(0, 247, 211, 0.0)');
+      
+      const graficoActividad = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+          datasets: [{
+            label: 'Actividad',
+            data: [65, 59, 80, 81, 56, 85, 90],
+            borderColor: '#00f7d3',
+            backgroundColor: gradiente,
+            borderWidth: 2,
+            pointBackgroundColor: '#00f7d3',
+            pointBorderColor: '#00f7d3',
+            pointRadius: 4,
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(255, 255, 255, 0.05)'
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              },
+              ticks: {
+                color: 'rgba(255, 255, 255, 0.7)'
+              }
+            }
+          }
+        }
+      });
+      
+      // Manejar el menú desplegable del usuario
+      const usuario = document.querySelector('.usuario');
+      usuario.addEventListener('click', function() {
+        // Aquí se implementaría la lógica para mostrar/ocultar el menú desplegable
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Contactos - AlhambraCRM</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../../css/estilos.css">
+  <link rel="stylesheet" href="../../../css/temas/tema-oscuro.css">
+  <style>
+    .tabla-contactos {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .tabla-contactos th {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    
+    .tabla-contactos td {
+      padding: 12px 15px;
+      border-bottom: 1px solid var(--color-borde);
+    }
+    
+    .tabla-contactos tr:hover {
+      background-color: var(--color-fondo-terciario);
+    }
+    
+    .acciones-contacto {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .accion-contacto {
+      background-color: var(--color-fondo-terciario);
+      border: none;
+      border-radius: 4px;
+      color: var(--color-texto-secundario);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px 10px;
+      transition: all 0.2s ease;
+    }
+    
+    .accion-contacto:hover {
+      background-color: var(--color-fondo-elevacion);
+      color: var(--color-texto-principal);
+    }
+    
+    .accion-editar:hover {
+      color: var(--color-primario);
+    }
+    
+    .accion-eliminar:hover {
+      color: var(--color-error);
+    }
+    
+    /* Modal para crear/editar contactos */
+    .modal {
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      height: 100%;
+      left: 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    
+    .modal-contenido {
+      background-color: var(--color-fondo-secundario);
+      border-radius: var(--borde-radio-medio);
+      box-shadow: var(--sombra-fuerte);
+      margin: 10% auto;
+      max-width: 600px;
+      position: relative;
+      width: 90%;
+    }
+    
+    .modal-cabecera {
+      align-items: center;
+      border-bottom: 1px solid var(--color-borde);
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 20px;
+    }
+    
+    .modal-cabecera h2 {
+      color: var(--color-texto-principal);
+      font-size: 20px;
+      margin: 0;
+    }
+    
+    .cerrar-modal {
+      background: none;
+      border: none;
+      color: var(--color-texto-secundario);
+      cursor: pointer;
+      font-size: 24px;
+      transition: var(--transicion-rapida);
+    }
+    
+    .cerrar-modal:hover {
+      color: var(--color-error);
+    }
+    
+    .modal-cuerpo {
+      padding: 20px;
+    }
+    
+    .formulario-contacto {
+      display: grid;
+      gap: 15px;
+    }
+    
+    .grupo-formulario {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .grupo-formulario label {
+      color: var(--color-texto-secundario);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .grupo-formulario input,
+    .grupo-formulario select,
+    .grupo-formulario textarea {
+      background-color: var(--color-fondo-principal);
+      border: 1px solid var(--color-borde);
+      border-radius: var(--borde-radio-pequeno);
+      color: var(--color-texto-principal);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      padding: 10px 12px;
+      transition: var(--transicion-rapida);
+    }
+    
+    .grupo-formulario textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .fila-formulario {
+      display: grid;
+      gap: 15px;
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    @media (max-width: 768px) {
+      .fila-formulario {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .modal-pie {
+      border-top: 1px solid var(--color-borde);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 15px 20px;
+    }
+    
+    /* Animaciones */
+    .animacion-entrada {
+      animation: entradaSuave 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    @keyframes entradaSuave {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+  </style>
+</head>
+<body class="tema-oscuro">
+  <!-- Barra lateral -->
+  <aside class="barra-lateral">
+    <div class="barra-lateral-cabecera">
+      <img src="../../../assets/imgs/logo-alhambra-blanco.svg" alt="AlhambraCRM" height="40">
+    </div>
+    
+    <ul class="barra-lateral-menu">
+      <li class="barra-lateral-item">
+        <a href="dashboard.html" class="barra-lateral-enlace">
+          <i class="fas fa-tachometer-alt barra-lateral-icono"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="proyectos.html" class="barra-lateral-enlace">
+          <i class="fas fa-project-diagram barra-lateral-icono"></i>
+          Proyectos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="tareas.html" class="barra-lateral-enlace">
+          <i class="fas fa-tasks barra-lateral-icono"></i>
+          Tareas
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="calendario.html" class="barra-lateral-enlace">
+          <i class="fas fa-calendar-alt barra-lateral-icono"></i>
+          Calendario
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="contactos.html" class="barra-lateral-enlace activo">
+          <i class="fas fa-address-book barra-lateral-icono"></i>
+          Contactos
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="informes.html" class="barra-lateral-enlace">
+          <i class="fas fa-chart-bar barra-lateral-icono"></i>
+          Informes
+        </a>
+      </li>
+      <li class="barra-lateral-item">
+        <a href="area-privada.html" class="barra-lateral-enlace">
+          <i class="fas fa-user-shield barra-lateral-icono"></i>
+          Área Privada
+        </a>
+      </li>
+    </ul>
+  </aside>
+  
+  <!-- Cabecera del panel -->
+  <header class="panel-cabecera">
+    <div class="busqueda">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar contactos..." id="buscarContactos">
+    </div>
+    
+    <div class="acciones-usuario">
+      <div class="notificaciones">
+        <i class="fas fa-bell"></i>
+        <span class="contador">3</span>
+      </div>
+      
+      <div class="usuario">
+        <img src="../../../assets/imgs/avatar-usuario.jpg" alt="Avatar" class="avatar-usuario">
+        <span class="nombre-usuario">Juan Pérez</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Contenido principal -->
+  <main class="contenido-principal">
+    <div class="cabecera-seccion">
+      <h1 class="animacion-entrada">Gestión de Contactos</h1>
+      <button class="boton-primario animacion-entrada" id="btnNuevoContacto">
+        <i class="fas fa-plus"></i> Nuevo Contacto
+      </button>
+    </div>
+    
+    <p class="animacion-entrada delay-1">Administra tus contactos y mantén organizada tu red profesional.</p>
+    
+    <!-- Contenedor de contactos -->
+    <div class="contenedor animacion-entrada delay-2">
+      <div class="contenedor-cabecera">
+        <h3>Mis Contactos</h3>
+        <div class="opciones-vista">
+          <button class="boton-pequeno activo" id="vistaTabla" title="Vista de tabla">
+            <i class="fas fa-list"></i>
+          </button>
+          <button class="boton-pequeno" id="vistaTargetas" title="Vista de tarjetas">
+            <i class="fas fa-th"></i>
+          </button>
+        </div>
+      </div>
+      <div class="contenedor-cuerpo">
+        <table class="tabla-contactos">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>Empresa</th>
+              <th>Cargo</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="listaContactos">
+            <!-- Los contactos se cargarán dinámicamente desde el backend -->
+            <tr>
+              <td>Ana García Martínez</td>
+              <td>ana.garcia@empresa.com</td>
+              <td>+34 612 345 678</td>
+              <td>Empresa ABC</td>
+              <td>Directora de Marketing</td>
+              <td>
+                <div class="acciones-contacto">
+                  <button class="accion-contacto accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-contacto accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Carlos Rodríguez López</td>
+              <td>carlos.rodriguez@empresa.com</td>
+              <td>+34 623 456 789</td>
+              <td>Empresa XYZ</td>
+              <td>Director Técnico</td>
+              <td>
+                <div class="acciones-contacto">
+                  <button class="accion-contacto accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-contacto accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Laura Fernández Sánchez</td>
+              <td>laura.fernandez@empresa.com</td>
+              <td>+34 634 567 890</td>
+              <td>Empresa 123</td>
+              <td>Gerente de Ventas</td>
+              <td>
+                <div class="acciones-contacto">
+                  <button class="accion-contacto accion-editar" title="Editar"><i class="fas fa-edit"></i></button>
+                  <button class="accion-contacto accion-eliminar" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Modal para crear/editar contactos -->
+  <div class="modal" id="modalContacto">
+    <div class="modal-contenido">
+      <div class="modal-cabecera">
+        <h2 id="tituloModal">Nuevo Contacto</h2>
+        <button class="cerrar-modal" id="cerrarModal">&times;</button>
+      </div>
+      <div class="modal-cuerpo">
+        <form id="formularioContacto" class="formulario-contacto">
+          <input type="hidden" id="idContacto" value="">
+          
+          <div class="fila-formulario">
+            <div class="grupo-formulario">
+              <label for="nombreContacto">Nombre</label>
+              <input type="text" id="nombreContacto" name="nombre" required>
+            </div>
+            
+            <div class="grupo-formulario">
+              <label for="apellidosContacto">Apellidos</label>
+              <input type="text" id="apellidosContacto" name="apellidos">
+            </div>
+          </div>
+          
+          <div class="fila-formulario">
+            <div class="grupo-formulario">
+              <label for="emailContacto">Email</label>
+              <input type="email" id="emailContacto" name="email" required>
+            </div>
+            
+            <div class="grupo-formulario">
+              <label for="telefonoContacto">Teléfono</label>
+              <input type="tel" id="telefonoContacto" name="telefono">
+            </div>
+          </div>
+          
+          <div class="fila-formulario">
+            <div class="grupo-formulario">
+              <label for="empresaContacto">Empresa</label>
+              <input type="text" id="empresaContacto" name="empresa">
+            </div>
+            
+            <div class="grupo-formulario">
+              <label for="cargoContacto">Cargo</label>
+              <input type="text" id="cargoContacto" name="cargo">
+            </div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="clienteContacto">Cliente</label>
+            <select id="clienteContacto" name="id_cliente">
+              <option value="">Sin asociar a cliente</option>
+              <option value="1">Empresa ABC</option>
+              <option value="2">Empresa XYZ</option>
+              <option value="3">Empresa 123</option>
+            </select>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="notasContacto">Notas</label>
+            <textarea id="notasContacto" name="notas"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-pie">
+        <button class="boton" id="cancelarContacto">Cancelar</button>
+        <button class="boton-primario" id="guardarContacto">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../../../js/autenticacion.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Proteger la página para que solo sea accesible por clientes
+      const autenticacion = new Autenticacion();
+      autenticacion.protegerPagina(['cliente']);
+      
+      // Referencias a elementos del DOM
+      const btnNuevoContacto = document.getElementById('btnNuevoContacto');
+      const modalContacto = document.getElementById('modalContacto');
+      const cerrarModal = document.getElementById('cerrarModal');
+      const cancelarContacto = document.getElementById('cancelarContacto');
+      const guardarContacto = document.getElementById('guardarContacto');
+      const formularioContacto = document.getElementById('formularioContacto');
+      const tituloModal = document.getElementById('tituloModal');
+      const buscarContactos = document.getElementById('buscarContactos');
+      
+      // Abrir modal para nuevo contacto
+      btnNuevoContacto.addEventListener('click', function() {
+        tituloModal.textContent = 'Nuevo Contacto';
+        formularioContacto.reset();
+        document.getElementById('idContacto').value = '';
+        modalContacto.style.display = 'block';
+      });
+      
+      // Cerrar modal
+      cerrarModal.addEventListener('click', function() {
+        modalContacto.style.display = 'none';
+      });
+      
+      cancelarContacto.addEventListener('click', function() {
+        modalContacto.style.display = 'none';
+      });
+      
+      // Cerrar modal al hacer clic fuera del contenido
+      window.addEventListener('click', function(event) {
+        if (event.target === modalContacto) {
+          modalContacto.style.display = 'none';
+        }
+      });
+      
+      // Guardar contacto
+      guardarContacto.addEventListener('click', function() {
+        // Aquí iría la lógica para guardar el contacto en el backend
+        // usando la API que hemos creado
+        
+        // Simulación de guardado
+        alert('Contacto guardado correctamente');
+        modalContacto.style.display = 'none';
+      });
+      
+      // Buscar contactos
+      buscarContactos.addEventListener('input', function() {
+        const terminoBusqueda = this.value.trim().toLowerCase();
+        
+        // Aquí iría la lógica para buscar contactos según el término de búsqueda
+        console.log('Buscar:', terminoBusqueda);
+      });
+      
+      // Editar contacto (delegación de eventos)
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.accion-editar')) {
+          const fila = e.target.closest('tr');
+          const nombre = fila.cells[0].textContent;
+          const email = fila.cells[1].textContent;
+          const telefono = fila.cells[2].textContent;
+          const empresa = fila.cells[3].textContent;
+          const cargo = fila.cells[4].textContent;
+          
+          // Cargar los datos en el formulario
+          tituloModal.textContent = 'Editar Contacto';
+          document.getElementById('nombreContacto').value = nombre.split(' ')[0];
+          document.getElementById('apellidosContacto').value = nombre.substring(nombre.indexOf(' ') + 1);
+          document.getElementById('emailContacto').value = email;
+          document.getElementById('telefonoContacto').value = telefono;
+          document.getElementById('empresaContacto').value = empresa;
+          document.getElementById('cargoContacto').value = cargo;
+          
+          modalContacto.style.display = 'block';
+        }
+      });
+      
+      // Cargar contactos desde el backend
+      function cargarContactos() {
+        // Aquí iría la lógica para cargar los contactos desde el backend
+        // usando la API que hemos creado
+        
+        // Ejemplo de cómo se podría implementar:
+        /*
+        fetch('/alhambraCrm/backend/api/contactos/obtener.php')
+          .then(response => response.json())
+          .then(data => {
+            if (data.registros) {
+              // Limpiar la tabla
+              const listaContactos = document.getElementById('listaContactos');
+              listaContactos.innerHTML = '';
+              
+              // Añadir los contactos a la tabla
+              data.registros.forEach(contacto => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                  <td>${contacto.nombre} ${contacto.apellidos}</td>
+                  <td>${contacto.email}</td>
+                  <td>${contacto.telefono || '-'}</td>
+                  <td>${contacto.empresa || '-'}</td>
+                  <td>${contacto.cargo || '-'}</td>
+                  <td>
+                    <div class="acciones-contacto">
+                      <button class="accion-contacto accion-editar" title="Editar" data-id="${contacto.id}"><i class="fas fa-edit"></i></button>
+                      <button class="accion-contacto accion-eliminar" title="Eliminar" data-id="${contacto.id}"><i class="fas fa-trash"></i></button>
+                    </div>
+                  </td>
+                `;
+                listaContactos.appendChild(fila);
+              });
+            }
+          })
+          .catch(error => console.error('Error al cargar los contactos:', error));
+        */
+      }
+      
+      // Cargar contactos al iniciar la página
+      // cargarContactos();
+    });
+  </script>
+</body>
+</html>
