@@ -95,10 +95,6 @@ El sistema está diseñado para ser fácilmente personalizable:
 - **Funcionalidades**: Extiende los modelos y controladores para añadir nuevas funcionalidades.
 - **Interfaz**: Modifica las páginas HTML para adaptar la interfaz a tus necesidades.
 
-## Soporte
-
-Para cualquier consulta o problema, por favor crea un issue en este repositorio.
-
 ## Licencia
 
 Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
